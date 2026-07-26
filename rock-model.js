@@ -51943,14 +51943,33 @@ function resolveUrl(path) {
   }
   return path.startsWith("/") ? path : `/${path}`;
 }
-async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = "/models/prehnite.usdz" } = {}) {
-  const url = resolveUrl(modelUrl);
-  const wasm = resolveUrl(wasmPath);
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || navigator.maxTouchPoints > 1 && window.innerWidth < 1024;
+}
+function setStatus(statusEl, text) {
+  if (statusEl && text) statusEl.textContent = text;
+}
+function assert3dSupport(statusEl) {
+  if (typeof WebGLRenderingContext === "undefined") {
+    throw new Error("WebGL is not available in this browser.");
+  }
+  if (typeof SharedArrayBuffer === "undefined") {
+    throw new Error(
+      "SharedArrayBuffer unavailable \u2014 update iOS/Android or open the site directly in Safari/Chrome (not an in-app browser)."
+    );
+  }
+  if (!window.crossOriginIsolated) {
+    throw new Error(
+      "Browser security mode blocked 3D \u2014 use Safari or Chrome and refresh."
+    );
+  }
+}
+async function waitForHostSize(host) {
   await new Promise((resolve) => {
-    if (host.clientWidth > 0 && host.clientHeight > 0) {
-      resolve();
-      return;
-    }
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+  if (host.clientWidth > 0 && host.clientHeight > 0) return;
+  await new Promise((resolve) => {
     const ro = new ResizeObserver(() => {
       if (host.clientWidth > 0 && host.clientHeight > 0) {
         ro.disconnect();
@@ -51961,29 +51980,48 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
     setTimeout(() => {
       ro.disconnect();
       resolve();
-    }, 3e3);
+    }, 4e3);
   });
+}
+async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = "/models/prehnite.usdz" } = {}) {
+  const url = resolveUrl(modelUrl);
+  const wasm = resolveUrl(wasmPath);
+  const mobile = isMobile();
+  setStatus(statusEl, mobile ? "Checking 3D support\u2026" : "Loading 3D model\u2026");
+  assert3dSupport(statusEl);
+  await waitForHostSize(host);
+  const width = Math.max(host.clientWidth, 1);
+  const height = Math.max(host.clientHeight, 1);
   const scene = new Scene();
   scene.background = new Color(12963286);
-  const camera = new PerspectiveCamera(
-    42,
-    host.clientWidth / host.clientHeight,
-    0.01,
-    1e3
-  );
-  const renderer = new WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(host.clientWidth, host.clientHeight);
+  const camera = new PerspectiveCamera(42, width / height, 0.01, 1e3);
+  let renderer;
+  try {
+    renderer = new WebGLRenderer({
+      antialias: !mobile,
+      alpha: true,
+      powerPreference: mobile ? "low-power" : "default"
+    });
+  } catch (err) {
+    throw new Error("Could not start WebGL on this device.");
+  }
+  renderer.setPixelRatio(mobile ? 1 : Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(width, height);
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   host.appendChild(renderer.domElement);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  controls.enablePan = false;
   controls.minDistance = 0.05;
   controls.maxDistance = 8;
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.6;
+  controls.touches = {
+    ONE: TOUCH.ROTATE,
+    TWO: TOUCH.DOLLY_PAN
+  };
   scene.add(new AmbientLight(16777215, 0.72));
   const key = new DirectionalLight(16775408, 1.35);
   key.position.set(3, 4, 2);
@@ -51991,17 +52029,17 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
   const fill = new DirectionalLight(9090303, 0.45);
   fill.position.set(-3, 1, -2);
   scene.add(fill);
-  const rim = new DirectionalLight(16777215, 0.35);
-  rim.position.set(0, 2, -4);
-  scene.add(rim);
+  setStatus(statusEl, mobile ? "Downloading 3D engine (~10 MB)\u2026" : "Loading 3D engine\u2026");
   const loader = new import_three_usdz_loader.USDZLoader(wasm);
   const group = new Group();
   scene.add(group);
+  setStatus(statusEl, mobile ? "Downloading scan\u2026" : "Loading scan\u2026");
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Could not load ${url}`);
   const blob = await response.blob();
   const fileName = url.split("/").pop() || "model.usdz";
   const file = new File([blob], fileName, { type: "model/vnd.usdz+zip" });
+  setStatus(statusEl, mobile ? "Processing scan\u2026" : "Processing 3D model\u2026");
   await loader.loadFile(file, group);
   const box = new Box3().setFromObject(group);
   const size = box.getSize(new Vector3());
@@ -52024,9 +52062,11 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
   animate();
   function onResize() {
     if (disposed || !host.isConnected) return;
-    camera.aspect = host.clientWidth / host.clientHeight;
+    const w = Math.max(host.clientWidth, 1);
+    const h = Math.max(host.clientHeight, 1);
+    camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    renderer.setSize(host.clientWidth, host.clientHeight);
+    renderer.setSize(w, h);
   }
   window.addEventListener("resize", onResize);
   function dispose() {

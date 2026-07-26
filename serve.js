@@ -40,32 +40,24 @@ function normalizePath(urlPath) {
   return decodeURIComponent(urlPath.split("?")[0]).toLowerCase();
 }
 
-/** Full viewer + WASM assets — strict isolation */
-function needsStrictIsolation(urlPath) {
+/** 3D viewer assets — credentialless matches Cloudflare Pages and mobile Safari */
+function needsCredentiallessIsolation(urlPath) {
   const p = normalizePath(urlPath);
   return (
+    p === "/" ||
+    p === "/index.html" ||
+    p === "/specimen-inline.js" ||
+    p === "/collection-3d.js" ||
     p === "/viewer.html" ||
     p === "/viewer-embed.html" ||
-    p.startsWith("/wasm/") ||
     p === "/rock-model.js" ||
     p === "/rock-viewer.js" ||
+    p.startsWith("/wasm/") ||
     (p.startsWith("/models/") && p.endsWith(".usdz"))
   );
 }
 
-/** Homepage inline 3D — credentialless keeps OSM tiles + Leaflet CDN working */
-function needsCredentiallessIsolation(urlPath) {
-  const p = normalizePath(urlPath);
-  return p === "/" || p === "/index.html" || p === "/specimen-inline.js" || p === "/collection-3d.js";
-}
-
 function applyIsolationHeaders(urlPath, headers) {
-  if (needsStrictIsolation(urlPath)) {
-    headers["Cross-Origin-Embedder-Policy"] = "require-corp";
-    headers["Cross-Origin-Opener-Policy"] = "same-origin";
-    headers["Cross-Origin-Resource-Policy"] = "same-origin";
-    return;
-  }
   if (needsCredentiallessIsolation(urlPath)) {
     headers["Cross-Origin-Embedder-Policy"] = "credentialless";
     headers["Cross-Origin-Opener-Policy"] = "same-origin";

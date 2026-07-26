@@ -14,10 +14,27 @@ function mobile3dBlockedReason(statusEl) {
   if (isInAppBrowser()) {
     return statusEl?.dataset.mobileError || "Open in Safari or Chrome for 3D.";
   }
-  if (!window.crossOriginIsolated) {
-    return statusEl?.dataset.mobileError || "3D requires a supported browser.";
-  }
   return null;
+}
+
+async function waitForVisible3dHost(host) {
+  await new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+  if (host.clientWidth > 0 && host.clientHeight > 0) return;
+  await new Promise((resolve) => {
+    const ro = new ResizeObserver(() => {
+      if (host.clientWidth > 0 && host.clientHeight > 0) {
+        ro.disconnect();
+        resolve();
+      }
+    });
+    ro.observe(host);
+    setTimeout(() => {
+      ro.disconnect();
+      resolve();
+    }, 4000);
+  });
 }
 
 async function getMountRockViewer() {
@@ -88,6 +105,13 @@ async function loadCard3d(card) {
   }
 
   try {
+    await waitForVisible3dHost(host);
+    if (status) {
+      status.textContent =
+        /iPhone|iPad|Android/i.test(navigator.userAgent)
+          ? "Downloading 3D engine (~10 MB)…"
+          : status.dataset.loading || "Loading 3D model…";
+    }
     const mount = await getMountRockViewer();
     const { dispose } = await mount(host, {
       statusEl: status,
@@ -97,7 +121,7 @@ async function loadCard3d(card) {
     card.classList.add("is-3d-ready");
   } catch (err) {
     if (status) {
-      status.textContent = status.dataset.error || "Could not load 3D model";
+      status.textContent = err?.message || status.dataset.error || "Could not load 3D model";
       status.classList.remove("hidden");
     }
     console.error(err);
