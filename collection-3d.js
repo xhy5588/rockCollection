@@ -1,4 +1,5 @@
 import { mountRockViewer } from "./rock-model.js";
+import { needsStatic3d, mountStaticViewer } from "./static-3d.js";
 
 const viewers = new Map();
 
@@ -58,11 +59,13 @@ async function loadCard3d(card) {
   }
 
   try {
-    const { dispose } = await mountRockViewer(host, {
-      statusEl: status,
-      modelUrl: model,
-    });
-    viewers.set(id, { dispose });
+    let result;
+    if (needsStatic3d()) {
+      result = await mountStaticViewer(host, { modelUrl: model, statusEl: status });
+    } else {
+      result = await mountRockViewer(host, { statusEl: status, modelUrl: model });
+    }
+    viewers.set(id, result);
     card.classList.add("is-3d-ready");
   } catch (err) {
     if (status) {
