@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+__MACOSX/
+
+# Large originals — scans live in models/*.usdz
+File_000.objcap
+models/Untitled Object 4.objcap/
+models/green_extract/
+models/usdz_extract/
+models/rock.zip
+rock+green (1).usdz
+
+# Optional: keep rock.zip at repo root for re-import; remove line below to include it
+# rock.zip

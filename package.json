@@ -1,0 +1,34 @@
+{
+  "name": "car-rental-website",
+  "version": "1.0.0",
+  "description": "A personal journal about mountain-climbing adventures and rock collecting across\r **five mountains in Yunnan, China**. The centerpiece is an interactive map: click\r any peak to read the story of that climb and browse the rocks collected on the trip.",
+  "main": "data.js",
+  "scripts": {
+    "build": "node extract-images.js && node build-data.js && esbuild rock-model-src.js --bundle --format=esm --platform=browser --outfile=rock-model.js",
+    "build:data": "node import-scans.js && node extract-images.js && node build-data.js",
+    "build:images": "node extract-images.js",
+    "start": "node serve.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xhy5588/Car-rental-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/xhy5588/Car-rental-website/issues"
+  },
+  "homepage": "https://github.com/xhy5588/Car-rental-website#readme",
+  "dependencies": {
+    "three": "^0.166.1",
+    "three-usdz-loader": "^1.0.9",
+    "usdz-to-glb": "^0.1.3"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.5.18",
+    "esbuild": "^0.28.1"
+  }
+}

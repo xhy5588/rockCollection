@@ -1,115 +1,217 @@
-/* global L, MOUNTAINS */
+/* global L, SPECIMENS, UI_STRINGS, MAP_CENTER */
 
-const YUNNAN_CENTER = [27.0, 100.2];
+let currentLang = localStorage.getItem("lang") || "zh";
+let activeSpecimenId = null;
+let mapInstance = null;
+let markers = {};
 
-function rockSwatch(rock) {
-  return `
-    <li class="rock">
-      <span
-        class="rock__stone"
-        style="background: radial-gradient(circle at 32% 28%, ${rock.color1}, ${rock.color2});"
-        aria-hidden="true"
-      ></span>
-      <div class="rock__text">
-        <p class="rock__name">${rock.name}</p>
-        <p class="rock__type">${rock.type}</p>
-        <p class="rock__note">${rock.note}</p>
-      </div>
-    </li>`;
+function t(key) {
+  return UI_STRINGS[currentLang][key] || key;
 }
 
-function renderPanel(m) {
+function field(obj) {
+  return obj[currentLang] || obj.en;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem("lang", lang);
+  document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+  applyStaticText();
+  buildCollection();
+  buildQuicklist(selectSpecimen);
+  if (activeSpecimenId) {
+    const s = SPECIMENS.find((x) => x.id === activeSpecimenId);
+    if (s) renderPanel(s);
+  }
+  document.getElementById("lang-toggle").textContent = t("langLabel");
+}
+
+function applyStaticText() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    const val = t(key);
+    if (el.dataset.i18nHtml === "true") el.innerHTML = val;
+    else el.textContent = val;
+  });
+  document.getElementById("stat-specimens").textContent = SPECIMENS.length;
+  document.getElementById("stat-provinces").textContent = new Set(
+    SPECIMENS.map((s) => s.province)
+  ).size;
+}
+
+
+function specimenPhotoAlt(s) {
+  return `${field(s.name)} — ${field(s.locality)}`;
+}
+
+function renderPhotoGallery(s) {
+  if (!s.photos || s.photos.length <= 1) return "";
+  const alt = specimenPhotoAlt(s);
+  const items = s.photos
+    .slice(1)
+    .map(
+      (src, i) =>
+        `<figure class="panel__photo"><img src="${src}" alt="${alt} (${i + 2})" loading="lazy" /></figure>`
+    )
+    .join("");
+  return `
+    <h4 class="panel__rocks-title">${t("panelPhotos")}</h4>
+    <div class="panel__photos">${items}</div>`;
+}
+
+function renderCover(s, className) {
+  if (s.cover) {
+    return `<img class="${className}" src="${s.cover}" alt="${specimenPhotoAlt(s)}" loading="lazy" />`;
+  }
+  return `<div class="${className} ${className}--empty"><span>${t("noFieldPhoto")}</span></div>`;
+}
+
+function renderCollectionMedia(s) {
+  const hasModel = Boolean(s.model3d);
+  const missingText = t("collection3dMissing").replace("{id}", s.id);
+  return `
+    <div class="collection-card__media">
+      <div class="collection-card__tabs" role="tablist">
+        <button type="button" class="collection-card__tab is-active" data-view="photo" role="tab" aria-selected="true">${t("collectionTabPhoto")}</button>
+        <button type="button" class="collection-card__tab${hasModel ? "" : " is-disabled"}" data-view="3d" role="tab" aria-selected="false"${hasModel ? "" : " disabled"}>${t("collectionTab3d")}</button>
+      </div>
+      <div class="collection-card__photo-view">
+        ${renderCover(s, "collection-card__photo")}
+      </div>
+      <div class="collection-card__3d-view" hidden>
+        <div class="collection-card__3d-frame">
+          <div class="collection-card__3d-host" data-model="${s.model3d || ""}"></div>
+          <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dMissing")}">${t("collection3dLoading")}</p>
+          <p class="collection-card__3d-hint">Drag to rotate · Scroll to zoom</p>
+        </div>
+        ${hasModel ? `<a class="collection-card__3d-link" href="viewer.html?id=${s.id}">${t("collectionOpen3d")}</a>` : `<p class="collection-card__3d-missing">${missingText}</p>`}
+      </div>
+    </div>`;
+}
+
+function renderPanel3dAction(s) {
+  if (!s.model3d) return "";
+  return `<button type="button" class="panel__3d-btn" data-id="${s.id}">${t("collectionView3d")}</button>`;
+}
+
+function renderPanel(s) {
+  activeSpecimenId = s.id;
   const panel = document.getElementById("detail-panel");
   panel.classList.remove("panel--empty");
-  panel.style.setProperty("--accent", m.accent);
+  panel.style.setProperty("--accent", s.accent);
   panel.innerHTML = `
     <div class="panel__header">
-      <span class="panel__badge">${m.elevation.toLocaleString()} m</span>
-      <h3>${m.name}</h3>
-      <p class="panel__sub">${m.chinese} · Peak: ${m.peak}</p>
-      <p class="panel__region">📍 ${m.region}</p>
+      ${renderCover(s, "panel__cover")}
+      <span class="panel__badge">${field(s.locality)}</span>
+      <h3>${field(s.name)}</h3>
+      <p class="panel__sub">${field(s.mineralClass)}</p>
+      <p class="panel__region">📍 ${field(s.locality)}</p>
     </div>
-    <p class="panel__story">${m.story}</p>
-    <h4 class="panel__rocks-title">Rocks I collected here</h4>
-    <ul class="rock-list">
-      ${m.rocks.map(rockSwatch).join("")}
-    </ul>`;
+    <p class="panel__story">${field(s.summary)}</p>
+    ${renderPanel3dAction(s)}
+    ${renderPhotoGallery(s)}
+    <h4 class="panel__rocks-title">${t("panelAppearance")}</h4>
+    <p class="panel__detail">${field(s.appearance)}</p>
+    <h4 class="panel__rocks-title">${t("panelFormation")}</h4>
+    <p class="panel__detail">${field(s.formation)}</p>
+    <h4 class="panel__rocks-title">${t("panelGeology")}</h4>
+    <p class="panel__detail">${field(s.geology)}</p>`;
+  panel.querySelector(".panel__3d-btn")?.addEventListener("click", (e) => {
+    const id = e.currentTarget.dataset.id;
+    document.getElementById("collection").scrollIntoView({ behavior: "smooth" });
+    window.Collection3d?.open(id);
+  });
   panel.scrollTop = 0;
 }
 
 function buildQuicklist(onSelect) {
   const list = document.getElementById("peak-quicklist");
-  list.innerHTML = MOUNTAINS.map(
-    (m) =>
-      `<li><button type="button" data-id="${m.id}">${m.name} · ${m.elevation.toLocaleString()}m</button></li>`
+  list.innerHTML = SPECIMENS.map(
+    (s) =>
+      `<li><button type="button" data-id="${s.id}">${field(s.name)} · ${field(s.locality)}</button></li>`
   ).join("");
   list.querySelectorAll("button").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const m = MOUNTAINS.find((x) => x.id === btn.dataset.id);
-      onSelect(m);
+      onSelect(SPECIMENS.find((x) => x.id === btn.dataset.id));
     });
   });
 }
 
 function buildCollection() {
+  if (window.Collection3d) window.Collection3d.disposeAll();
   const grid = document.getElementById("collection-grid");
-  grid.innerHTML = MOUNTAINS.map(
-    (m) => `
-      <div class="collection-card" style="--accent:${m.accent}">
-        <h3>${m.name}</h3>
-        <p class="collection-card__sub">${m.chinese}</p>
-        <ul class="rock-list">${m.rocks.map(rockSwatch).join("")}</ul>
+  grid.innerHTML = SPECIMENS.map(
+    (s) => `
+      <div class="collection-card" data-id="${s.id}" data-has-model="${s.model3d ? "true" : "false"}" style="--accent:${s.accent}">
+        ${renderCollectionMedia(s)}
+        <h3>${field(s.name)}</h3>
+        <p class="collection-card__sub">${field(s.mineralClass)} · ${field(s.locality)}</p>
+        <p class="collection-card__summary">${field(s.summary)}</p>
+        <button type="button" class="collection-card__btn" data-id="${s.id}">${currentLang === "zh" ? "查看详情" : "View on map"}</button>
       </div>`
   ).join("");
+  grid.querySelectorAll(".collection-card__btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const s = SPECIMENS.find((x) => x.id === btn.dataset.id);
+      selectSpecimen(s);
+      document.getElementById("map").scrollIntoView({ behavior: "smooth" });
+    });
+  });
+  window.Collection3d?.setup(grid);
 }
 
-function makeMarkerIcon(m) {
+function makeMarkerIcon(s) {
   return L.divIcon({
     className: "peak-marker",
-    html: `<span class="peak-marker__pin" style="--accent:${m.accent}">▲</span>
-           <span class="peak-marker__label">${m.name}</span>`,
-    iconSize: [120, 40],
+    html: `<span class="peak-marker__pin" style="--accent:${s.accent}">◆</span>
+           <span class="peak-marker__label">${field(s.name)}</span>`,
+    iconSize: [140, 40],
     iconAnchor: [16, 34],
   });
 }
 
+function selectSpecimen(s) {
+  renderPanel(s);
+  mapInstance.flyTo(s.coords, 9, { duration: 0.8 });
+  Object.values(markers).forEach((mk) =>
+    mk._icon && mk._icon.classList.remove("peak-marker--active")
+  );
+  if (markers[s.id]._icon) {
+    markers[s.id]._icon.classList.add("peak-marker--active");
+  }
+}
+
 function initMap() {
-  const map = L.map("leaflet-map", {
-    center: YUNNAN_CENTER,
-    zoom: 7,
+  mapInstance = L.map("leaflet-map", {
+    center: MAP_CENTER,
+    zoom: 6,
     scrollWheelZoom: false,
   });
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 17,
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(mapInstance);
 
-  const markers = {};
-  const select = (m) => {
-    renderPanel(m);
-    map.flyTo(m.coords, 9, { duration: 0.8 });
-    Object.values(markers).forEach((mk) =>
-      mk._icon && mk._icon.classList.remove("peak-marker--active")
-    );
-    if (markers[m.id]._icon) {
-      markers[m.id]._icon.classList.add("peak-marker--active");
-    }
-  };
-
-  MOUNTAINS.forEach((m) => {
-    const marker = L.marker(m.coords, { icon: makeMarkerIcon(m), title: m.name })
-      .addTo(map)
-      .on("click", () => select(m));
-    markers[m.id] = marker;
+  SPECIMENS.forEach((s) => {
+    const marker = L.marker(s.coords, {
+      icon: makeMarkerIcon(s),
+      title: field(s.name),
+    })
+      .addTo(mapInstance)
+      .on("click", () => selectSpecimen(s));
+    markers[s.id] = marker;
   });
 
-  buildQuicklist(select);
-  return map;
+  buildQuicklist(selectSpecimen);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  buildCollection();
+  document.getElementById("lang-toggle").addEventListener("click", () => {
+    setLang(currentLang === "zh" ? "en" : "zh");
+  });
+  setLang(currentLang);
   initMap();
 });

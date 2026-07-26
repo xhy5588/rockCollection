@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Rock Specimen — Peaks &amp; Pebbles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: #0e1116;
+        color: #e8ecf1;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.9rem 1.2rem;
+        border-bottom: 1px solid #2a323d;
+        background: #161b22;
+      }
+      .bar a { color: #9aa6b2; text-decoration: none; }
+      .bar a:hover { color: #fff; }
+      #canvas-host {
+        width: 100vw;
+        height: calc(100vh - 52px);
+        position: relative;
+        background: #c5cdd6;
+      }
+      #status {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #c5cdd6;
+        color: #374151;
+        z-index: 2;
+      }
+      #status.hidden { display: none; }
+      .hint {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid #9ca8b4;
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        color: #374151;
+        pointer-events: none;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <strong>3D Rock Specimen</strong>
+      <a href="index.html">← Back to site</a>
+    </div>
+    <div id="canvas-host">
+      <div id="status">Loading 3D model…</div>
+      <p class="hint">Drag to rotate · Scroll to zoom</p>
+    </div>
+    <script type="module" src="rock-viewer.js"></script>
+  </body>
+</html>

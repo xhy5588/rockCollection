@@ -1,0 +1,134 @@
+{
+  "tanzanite-quartz": {
+    "cover": "images/specimens/tanzanite-quartz/01.jpeg",
+    "photos": [
+      "images/specimens/tanzanite-quartz/01.jpeg"
+    ]
+  },
+  "hemimorphite": {
+    "cover": "images/specimens/hemimorphite/02.jpeg",
+    "photos": [
+      "images/specimens/hemimorphite/02.jpeg",
+      "images/specimens/hemimorphite/01.jpeg"
+    ]
+  },
+  "sodalite": {
+    "cover": "images/specimens/sodalite/01.jpeg",
+    "photos": [
+      "images/specimens/sodalite/01.jpeg"
+    ]
+  },
+  "fluelite": {
+    "cover": "images/specimens/fluelite/01.jpeg",
+    "photos": [
+      "images/specimens/fluelite/01.jpeg"
+    ]
+  },
+  "phosphophyllite": {
+    "cover": "images/specimens/phosphophyllite/01.jpeg",
+    "photos": [
+      "images/specimens/phosphophyllite/01.jpeg"
+    ]
+  },
+  "fanta-garnet": {
+    "cover": "images/specimens/fanta-garnet/01.jpeg",
+    "photos": [
+      "images/specimens/fanta-garnet/01.jpeg"
+    ]
+  },
+  "fluorite": {
+    "cover": "images/specimens/fluorite/01.jpeg",
+    "photos": [
+      "images/specimens/fluorite/01.jpeg"
+    ]
+  },
+  "prehnite": {
+    "cover": "images/specimens/prehnite/01.jpeg",
+    "photos": [
+      "images/specimens/prehnite/01.jpeg"
+    ]
+  },
+  "carbonite": {
+    "cover": "images/specimens/carbonite/01.jpeg",
+    "photos": [
+      "images/specimens/carbonite/01.jpeg"
+    ]
+  },
+  "blue-fluorite": {
+    "cover": "images/specimens/blue-fluorite/01.jpeg",
+    "photos": [
+      "images/specimens/blue-fluorite/01.jpeg"
+    ]
+  },
+  "azurite": {
+    "cover": "images/specimens/azurite/01.jpeg",
+    "photos": [
+      "images/specimens/azurite/01.jpeg"
+    ]
+  },
+  "orpiment-realgar": {
+    "cover": "images/specimens/orpiment-realgar/01.jpeg",
+    "photos": [
+      "images/specimens/orpiment-realgar/01.jpeg",
+      "images/specimens/orpiment-realgar/02.jpeg"
+    ]
+  },
+  "pyrite": {
+    "cover": "images/specimens/pyrite/01.jpeg",
+    "photos": [
+      "images/specimens/pyrite/01.jpeg"
+    ]
+  },
+  "turtle-stone": {
+    "cover": "images/specimens/turtle-stone/02.jpeg",
+    "photos": [
+      "images/specimens/turtle-stone/02.jpeg",
+      "images/specimens/turtle-stone/01.jpeg",
+      "images/specimens/turtle-stone/05.jpeg",
+      "images/specimens/turtle-stone/04.jpeg",
+      "images/specimens/turtle-stone/03.jpeg"
+    ]
+  },
+  "ruby": {
+    "cover": "images/specimens/ruby/01.jpg",
+    "photos": [
+      "images/specimens/ruby/01.jpg"
+    ]
+  },
+  "pink-tourmaline": {
+    "cover": "images/specimens/pink-tourmaline/01.jpg",
+    "photos": [
+      "images/specimens/pink-tourmaline/01.jpg"
+    ]
+  },
+  "bornite": {
+    "cover": "images/specimens/bornite/01.jpg",
+    "photos": [
+      "images/specimens/bornite/01.jpg"
+    ]
+  },
+  "phoenix-turquoise": {
+    "cover": "images/specimens/phoenix-turquoise/01.jpg",
+    "photos": [
+      "images/specimens/phoenix-turquoise/01.jpg"
+    ]
+  },
+  "calcite": {
+    "cover": "images/specimens/calcite/01.jpg",
+    "photos": [
+      "images/specimens/calcite/01.jpg"
+    ]
+  },
+  "lazulite": {
+    "cover": "images/specimens/lazulite/01.jpg",
+    "photos": [
+      "images/specimens/lazulite/01.jpg"
+    ]
+  },
+  "azurite-fluorite": {
+    "cover": "images/specimens/azurite-fluorite/01.jpg",
+    "photos": [
+      "images/specimens/azurite-fluorite/01.jpg"
+    ]
+  }
+}

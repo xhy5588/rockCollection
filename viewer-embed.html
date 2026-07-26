@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Specimen Embed</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: #0e1116;
+        overflow: hidden;
+      }
+      #canvas-host {
+        width: 100%;
+        height: 100%;
+      }
+      #status {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9aa6b2;
+        font: 14px/1.4 system-ui, sans-serif;
+        pointer-events: none;
+      }
+      #status.hidden { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-host"></div>
+    <div id="status">Loading 3D model…</div>
+    <script type="module" src="rock-viewer.js"></script>
+  </body>
+</html>

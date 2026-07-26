@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-label="Rock specimen preview">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#1a2330"/>
+      <stop offset="100%" stop-color="#0e1116"/>
+    </radialGradient>
+    <radialGradient id="rock" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#86efac"/>
+      <stop offset="45%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="640" height="640" fill="url(#bg)"/>
+  <ellipse cx="320" cy="520" rx="180" ry="28" fill="#000" opacity="0.35"/>
+  <path filter="url(#shadow)" d="M320 120c-92 8-168 78-176 168-6 72 28 138 88 178 34 24 74 36 116 36 42 0 82-12 116-36 60-40 94-106 88-178-8-90-84-160-176-168-24-2-48-2-72 0z" fill="url(#rock)"/>
+  <path d="M248 210c22-18 52-28 84-26 38 2 72 18 96 44" fill="none" stroke="#ecfdf5" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <text x="320" y="580" text-anchor="middle" fill="#9aa6b2" font-family="system-ui,sans-serif" font-size="22">Field specimen � 3D scan</text>
+</svg>
