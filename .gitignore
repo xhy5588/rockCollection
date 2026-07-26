@@ -10,5 +10,5 @@ models/usdz_extract/
 models/rock.zip
 rock+green (1).usdz
 
-# Optional: keep rock.zip at repo root for re-import; remove line below to include it
-# rock.zip
+# Source archive for re-import locally (models/*.usdz are deployed instead)
+rock.zip
