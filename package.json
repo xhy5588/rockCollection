@@ -4,7 +4,7 @@
   "description": "A personal journal about mountain-climbing adventures and rock collecting across\r **five mountains in Yunnan, China**. The centerpiece is an interactive map: click\r any peak to read the story of that climb and browse the rocks collected on the trip.",
   "main": "data.js",
   "scripts": {
-    "build": "node extract-images.js && node build-data.js && esbuild rock-model-src.js --bundle --format=esm --platform=browser --outfile=rock-model.js",
+    "build": "node build-data.js && esbuild rock-model-src.js --bundle --format=esm --platform=browser --outfile=rock-model.js",
     "build:data": "node import-scans.js && node extract-images.js && node build-data.js",
     "build:images": "node extract-images.js",
     "start": "node serve.js",

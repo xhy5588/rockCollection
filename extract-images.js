@@ -109,9 +109,12 @@ function importStandalonePhotos(manifest) {
 }
 
 function main() {
-  const manifest = {};
+  let manifest = fs.existsSync(MANIFEST)
+    ? JSON.parse(fs.readFileSync(MANIFEST, "utf8"))
+    : {};
 
   if (fs.existsSync(DOCX_DIR)) {
+    manifest = {};
     const docxFiles = fs.readdirSync(DOCX_DIR).filter((f) => f.endsWith(".docx"));
     for (const file of docxFiles) {
       const id = DOCX_TO_ID[file];
@@ -127,7 +130,9 @@ function main() {
       console.log(`${file} → ${id}: ${photos.length} photo(s)`);
     }
   } else {
-    console.warn(`DOCX folder not found, skipping docx extraction`);
+    console.warn(
+      `DOCX folder not found — keeping existing manifest (${Object.keys(manifest).length} entries)`
+    );
   }
 
   importStandalonePhotos(manifest);
