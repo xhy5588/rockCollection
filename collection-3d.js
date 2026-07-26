@@ -1,5 +1,4 @@
 import { mountRockViewer } from "./rock-model.js";
-import { needsStatic3d, mountStaticViewer } from "./static-3d.js";
 
 const viewers = new Map();
 
@@ -59,20 +58,15 @@ async function loadCard3d(card) {
   }
 
   try {
-    let result;
-    if (needsStatic3d()) {
-      result = await mountStaticViewer(host, { modelUrl: model, statusEl: status });
-    } else {
-      result = await mountRockViewer(host, { statusEl: status, modelUrl: model });
-    }
-    viewers.set(id, result);
+    const { dispose } = await mountRockViewer(host, {
+      statusEl: status,
+      modelUrl: model,
+    });
+    viewers.set(id, { dispose });
     card.classList.add("is-3d-ready");
   } catch (err) {
     if (status) {
-      const onPages = location.hostname.endsWith("github.io");
-      status.textContent = onPages
-        ? status.dataset.pagesError || status.dataset.error || "Could not load 3D model"
-        : status.dataset.error || "Could not load 3D model";
+      status.textContent = status.dataset.error || "Could not load 3D model";
       status.classList.remove("hidden");
     }
     console.error(err);

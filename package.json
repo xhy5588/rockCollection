@@ -24,8 +24,7 @@
   "homepage": "https://github.com/xhy5588/Car-rental-website#readme",
   "dependencies": {
     "three": "^0.166.1",
-    "three-usdz-loader": "^1.0.9",
-    "usdz-to-glb": "^0.1.3"
+    "three-usdz-loader": "^1.0.9"
   },
   "devDependencies": {
     "adm-zip": "^0.5.18",
