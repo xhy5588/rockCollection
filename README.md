@@ -1,4 +1,4 @@
-# Peaks & Pebbles — Climbing Yunnan
+# rockCollection — Peaks & Pebbles
 
 A personal journal about mountain-climbing adventures and rock collecting across
 **five mountains in Yunnan, China**. The centerpiece is an interactive map: click

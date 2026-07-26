@@ -1,5 +1,5 @@
 {
-  "name": "car-rental-website",
+  "name": "rockCollection",
   "version": "1.0.0",
   "description": "A personal journal about mountain-climbing adventures and rock collecting across\r **five mountains in Yunnan, China**. The centerpiece is an interactive map: click\r any peak to read the story of that climb and browse the rocks collected on the trip.",
   "main": "data.js",
@@ -12,16 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xhy5588/Car-rental-website.git"
+    "url": "git+https://github.com/xhy5588/rockCollection.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/xhy5588/Car-rental-website/issues"
+    "url": "https://github.com/xhy5588/rockCollection/issues"
   },
-  "homepage": "https://github.com/xhy5588/Car-rental-website#readme",
+  "homepage": "https://github.com/xhy5588/rockCollection#readme",
   "dependencies": {
     "three": "^0.166.1",
     "three-usdz-loader": "^1.0.9"
