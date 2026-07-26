@@ -82,8 +82,8 @@ function renderCollectionMedia(s) {
       <div class="collection-card__3d-view" hidden>
         <div class="collection-card__3d-frame">
           <div class="collection-card__3d-host" data-model="${s.model3d || ""}"></div>
-          <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dError")}">${t("collection3dLoading")}</p>
-          <p class="collection-card__3d-hint">Drag to rotate · Scroll to zoom</p>
+          <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dError")}" data-mobile-error="${t("collection3dMobileHint")}">${t("collection3dLoading")}</p>
+          <p class="collection-card__3d-hint">${currentLang === "zh" ? "滑动旋转 · 双指缩放" : "Drag to rotate · Pinch to zoom"}</p>
         </div>
         ${hasModel ? "" : `<p class="collection-card__3d-missing">${missingText}</p>`}
       </div>

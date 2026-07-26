@@ -966,6 +966,8 @@ const UI_STRINGS = {
     collection3dLoading: "Loading 3D model…",
     collection3dMissing: "3D scan not added yet — place models/{id}.usdz in the models folder.",
     collection3dError: "Could not load 3D model.",
+    collection3dMobileHint:
+      "3D scans need Safari or Chrome (not WeChat/in-app browser). Use Wi‑Fi — first load downloads ~10 MB.",
     collectionOpen3d: "Open full-screen 3D →",
     collectionView3d: "View 3D in collection ↓",
     aboutTitle: "About this journal",
@@ -1011,6 +1013,8 @@ const UI_STRINGS = {
     collection3dLoading: "正在加载 3D 模型…",
     collection3dMissing: "尚未添加 3D 扫描 — 将 models/{id}.usdz 放入 models 文件夹即可。",
     collection3dError: "无法加载 3D 模型。",
+    collection3dMobileHint:
+      "3D 扫描需用 Safari 或 Chrome 打开（微信内置浏览器不支持）。建议 Wi‑Fi，首次约需下载 10 MB。",
     collectionOpen3d: "打开全屏 3D →",
     collectionView3d: "在标本集中查看 3D ↓",
     aboutTitle: "关于这份笔记",

@@ -637,6 +637,7 @@ main {
 .collection-card__3d-host {
   position: absolute;
   inset: 0;
+  touch-action: none;
 }
 
 .collection-card__3d-host canvas {

@@ -1,9 +1,30 @@
-import { mountRockViewer } from "./rock-model.js";
-
 const viewers = new Map();
+let mountRockViewer = null;
 
 function cardForId(id) {
   return document.querySelector(`.collection-card[data-id="${id}"]`);
+}
+
+function isInAppBrowser() {
+  const ua = navigator.userAgent || "";
+  return /MicroMessenger|WeChat|QQ\//i.test(ua);
+}
+
+function mobile3dBlockedReason(statusEl) {
+  if (isInAppBrowser()) {
+    return statusEl?.dataset.mobileError || "Open in Safari or Chrome for 3D.";
+  }
+  if (!window.crossOriginIsolated) {
+    return statusEl?.dataset.mobileError || "3D requires a supported browser.";
+  }
+  return null;
+}
+
+async function getMountRockViewer() {
+  if (!mountRockViewer) {
+    ({ mountRockViewer } = await import("./rock-model.js"));
+  }
+  return mountRockViewer;
 }
 
 function setActiveTab(card, view) {
@@ -57,8 +78,18 @@ async function loadCard3d(card) {
     status.classList.remove("hidden");
   }
 
+  const blocked = mobile3dBlockedReason(status);
+  if (blocked) {
+    if (status) {
+      status.textContent = blocked;
+      status.classList.remove("hidden");
+    }
+    return;
+  }
+
   try {
-    const { dispose } = await mountRockViewer(host, {
+    const mount = await getMountRockViewer();
+    const { dispose } = await mount(host, {
       statusEl: status,
       modelUrl: model,
     });
