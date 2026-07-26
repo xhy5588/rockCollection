@@ -85,7 +85,7 @@ function renderCollectionMedia(s) {
           <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dError")}">${t("collection3dLoading")}</p>
           <p class="collection-card__3d-hint">Drag to rotate · Scroll to zoom</p>
         </div>
-        ${hasModel ? `<a class="collection-card__3d-link" href="viewer.html?id=${s.id}">${t("collectionOpen3d")}</a>` : `<p class="collection-card__3d-missing">${missingText}</p>`}
+        ${hasModel ? "" : `<p class="collection-card__3d-missing">${missingText}</p>`}
       </div>
     </div>`;
 }
