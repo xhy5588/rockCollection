@@ -5,13 +5,42 @@ function cardForId(id) {
   return document.querySelector(`.collection-card[data-id="${id}"]`);
 }
 
-function isInAppBrowser() {
-  const ua = navigator.userAgent || "";
-  return /MicroMessenger|WeChat|QQ\//i.test(ua);
+function isMobileDevice() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
+function shouldUseScanFrame() {
+  return isMobileDevice() || !window.crossOriginIsolated;
+}
+
+function scanFrameUrl(id) {
+  const base = window.siteUrl ? window.siteUrl("/scan.html") : "/scan.html";
+  return `${base}?id=${encodeURIComponent(id)}`;
+}
+
+function mountScanFrame(host, id, status) {
+  host.innerHTML = "";
+  const iframe = document.createElement("iframe");
+  iframe.src = scanFrameUrl(id);
+  iframe.title = "3D scan";
+  iframe.setAttribute("loading", "lazy");
+  iframe.style.border = "0";
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.style.display = "block";
+  iframe.style.background = "#c5cdd6";
+  host.appendChild(iframe);
+  if (status) status.classList.add("hidden");
+  return {
+    dispose() {
+      host.innerHTML = "";
+    },
+  };
 }
 
 function mobile3dBlockedReason(statusEl) {
-  if (isInAppBrowser()) {
+  const ua = navigator.userAgent || "";
+  if (/MicroMessenger|WeChat|QQ\//i.test(ua)) {
     return statusEl?.dataset.mobileError || "Open in Safari or Chrome for 3D.";
   }
   return null;
@@ -106,11 +135,16 @@ async function loadCard3d(card) {
 
   try {
     await waitForVisible3dHost(host);
+
+    if (shouldUseScanFrame()) {
+      const entry = mountScanFrame(host, id, status);
+      viewers.set(id, entry);
+      card.classList.add("is-3d-ready");
+      return;
+    }
+
     if (status) {
-      status.textContent =
-        /iPhone|iPad|Android/i.test(navigator.userAgent)
-          ? "Downloading 3D engine (~10 MB)…"
-          : status.dataset.loading || "Loading 3D model…";
+      status.textContent = status.dataset.loading || "Loading 3D model…";
     }
     const mount = await getMountRockViewer();
     const { dispose } = await mount(host, {

@@ -11,7 +11,7 @@ if (title) title.textContent = `3D Scan — ${id}`;
 
 mountRockViewer(host, { statusEl: status, modelUrl }).catch((err) => {
   if (status) {
-    status.textContent = "Could not load 3D model. Refresh the page and try again.";
+    status.textContent = err?.message || "Could not load 3D model. Refresh and try again.";
   }
   console.error(err);
 });

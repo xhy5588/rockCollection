@@ -50,6 +50,7 @@ function needsCredentiallessIsolation(urlPath) {
     p === "/collection-3d.js" ||
     p === "/viewer.html" ||
     p === "/viewer-embed.html" ||
+    p === "/scan.html" ||
     p === "/rock-model.js" ||
     p === "/rock-viewer.js" ||
     p.startsWith("/wasm/") ||
