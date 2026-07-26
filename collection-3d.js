@@ -66,8 +66,10 @@ async function loadCard3d(card) {
     card.classList.add("is-3d-ready");
   } catch (err) {
     if (status) {
-      status.textContent =
-        status.dataset.error || "Could not load 3D model";
+      const onPages = location.hostname.endsWith("github.io");
+      status.textContent = onPages
+        ? status.dataset.pagesError || status.dataset.error || "Could not load 3D model"
+        : status.dataset.error || "Could not load 3D model";
       status.classList.remove("hidden");
     }
     console.error(err);

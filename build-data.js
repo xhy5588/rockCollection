@@ -222,8 +222,8 @@ const SCAN_ONLY = [
     color1: "#c084fc",
     color2: "#6b21a8",
     summary: {
-      en: "Peacock-bornite from Yunnan's copper districts — natural metallic surfaces with purple-blue tarnish. 3D scan only; field photo pending.",
-      zh: "来自云南铜矿区的斑铜矿标本，保留天然金属光泽与紫蓝氧化色斑。目前仅有 3D 扫描，野外照片待补充。",
+      en: "Peacock-bornite from Yunnan's copper districts — natural metallic surfaces with purple-blue tarnish. Field photo and 3D scan from my collection.",
+      zh: "来自云南铜矿区的斑铜矿标本，保留天然金属光泽与紫蓝氧化色斑。含野外照片与 3D 扫描。",
     },
     appearance: {
       en: "Brassy to purple-blue iridescence on fractured surfaces; dense metallic texture typical of copper sulfide ore.",
@@ -707,6 +707,8 @@ const UI_STRINGS = {
     collectionTab3d: "3D Scan",
     collection3dLoading: "Loading 3D model…",
     collection3dMissing: "3D scan not added yet — place models/{id}.usdz in the models folder.",
+    collection3dError: "Could not load 3D model in this browser.",
+    collection3dPagesHint: "Interactive 3D needs Netlify or local server (node serve.js). Photos and notes work here on GitHub Pages.",
     collectionOpen3d: "Open full-screen 3D →",
     collectionView3d: "View 3D in collection ↓",
     aboutTitle: "About this journal",
@@ -751,6 +753,8 @@ const UI_STRINGS = {
     collectionTab3d: "3D 扫描",
     collection3dLoading: "正在加载 3D 模型…",
     collection3dMissing: "尚未添加 3D 扫描 — 将 models/{id}.usdz 放入 models 文件夹即可。",
+    collection3dError: "无法在此浏览器中加载 3D 模型。",
+    collection3dPagesHint: "交互式 3D 需使用 Netlify 或本地服务器（node serve.js）。GitHub Pages 上可正常查看照片与笔记。",
     collectionOpen3d: "打开全屏 3D →",
     collectionView3d: "在标本集中查看 3D ↓",
     aboutTitle: "关于这份笔记",

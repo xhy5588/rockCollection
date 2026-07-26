@@ -82,7 +82,7 @@ function renderCollectionMedia(s) {
       <div class="collection-card__3d-view" hidden>
         <div class="collection-card__3d-frame">
           <div class="collection-card__3d-host" data-model="${s.model3d || ""}"></div>
-          <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dMissing")}">${t("collection3dLoading")}</p>
+          <p class="collection-card__3d-status" data-loading="${t("collection3dLoading")}" data-error="${t("collection3dError")}" data-pages-error="${t("collection3dPagesHint")}">${t("collection3dLoading")}</p>
           <p class="collection-card__3d-hint">Drag to rotate · Scroll to zoom</p>
         </div>
         ${hasModel ? `<a class="collection-card__3d-link" href="viewer.html?id=${s.id}">${t("collectionOpen3d")}</a>` : `<p class="collection-card__3d-missing">${missingText}</p>`}
