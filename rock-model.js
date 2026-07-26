@@ -51937,8 +51937,15 @@ var OrbitControls = class extends EventDispatcher {
 
 // rock-model-src.js
 var import_three_usdz_loader = __toESM(require_USDZLoader());
+function resolveUrl(path) {
+  if (typeof window !== "undefined" && window.siteUrl) {
+    return window.siteUrl(path);
+  }
+  return path.startsWith("/") ? path : `/${path}`;
+}
 async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = "/models/prehnite.usdz" } = {}) {
-  const url = modelUrl.startsWith("/") ? modelUrl : `/${modelUrl}`;
+  const url = resolveUrl(modelUrl);
+  const wasm = resolveUrl(wasmPath);
   await new Promise((resolve) => {
     if (host.clientWidth > 0 && host.clientHeight > 0) {
       resolve();
@@ -51987,7 +51994,7 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
   const rim = new DirectionalLight(16777215, 0.35);
   rim.position.set(0, 2, -4);
   scene.add(rim);
-  const loader = new import_three_usdz_loader.USDZLoader(wasmPath);
+  const loader = new import_three_usdz_loader.USDZLoader(wasm);
   const group = new Group();
   scene.add(group);
   const response = await fetch(url);

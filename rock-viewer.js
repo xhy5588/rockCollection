@@ -4,7 +4,7 @@ const host = document.getElementById("canvas-host");
 const status = document.getElementById("status");
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id") || "prehnite";
-const modelUrl = `/models/${id}.usdz`;
+const modelUrl = window.siteUrl(`/models/${id}.usdz`);
 
 const title = document.querySelector(".bar strong");
 if (title) title.textContent = `3D Scan — ${id}`;

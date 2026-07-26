@@ -2,11 +2,19 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { USDZLoader } from "three-usdz-loader";
 
+function resolveUrl(path) {
+  if (typeof window !== "undefined" && window.siteUrl) {
+    return window.siteUrl(path);
+  }
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
 export async function mountRockViewer(
   host,
   { statusEl, wasmPath = "/wasm", modelUrl = "/models/prehnite.usdz" } = {}
 ) {
-  const url = modelUrl.startsWith("/") ? modelUrl : `/${modelUrl}`;
+  const url = resolveUrl(modelUrl);
+  const wasm = resolveUrl(wasmPath);
 
   await new Promise((resolve) => {
     if (host.clientWidth > 0 && host.clientHeight > 0) {
@@ -62,7 +70,7 @@ export async function mountRockViewer(
   rim.position.set(0, 2, -4);
   scene.add(rim);
 
-  const loader = new USDZLoader(wasmPath);
+  const loader = new USDZLoader(wasm);
   const group = new THREE.Group();
   scene.add(group);
 

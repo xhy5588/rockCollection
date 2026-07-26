@@ -60,7 +60,7 @@ async function loadCard3d(card) {
   try {
     const { dispose } = await mountRockViewer(host, {
       statusEl: status,
-      modelUrl: model.startsWith("/") ? model : `/${model}`,
+      modelUrl: model,
     });
     viewers.set(id, { dispose });
     card.classList.add("is-3d-ready");
