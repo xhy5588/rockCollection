@@ -40,8 +40,8 @@ const SPECIMENS = [
       "zh": "这些纹理形成于古老小行星内部铁镍物质的极缓慢冷却。化学与岩石学研究证明，新疆各地的巨型陨铁属于同一次异常 IIIE 陨落事件。"
     },
     "geology": {
-      "en": "Large masses have been known since 1898. Later finds include Wuxilike at 5 tonnes and Ulasitai at 430 kg. The paired strewn field extends roughly 425 km northwest to southeast across northern Xinjiang; the collective name Aletai was approved in 2016.",
-      "zh": "自 1898 年起当地已知多块巨型陨铁，后续发现包括 5 吨的乌希里克与 430 千克的乌拉斯台。成对散落带沿西北至东南方向延伸约 425 千米，2016 年统一获批定名为“阿勒泰”。"
+      "en": "Large iron masses have been known across northern Xinjiang since 1898. The most famous is the 28-tonne Armanty mass, traditionally called the Silver Camel; later discoveries included the 5-tonne Wuxilike mass and the 430 kg Ulasitai mass. Chemical and petrologic studies demonstrated that these geographically separated irons are paired fragments of one ancient fall. Their remarkable strewn field runs about 425 km from northwest to southeast across northern Xinjiang. The historic local names remain attached to individual masses, while the collective official name Aletai was approved on 27 November 2016 and published in Meteoritical Bulletin 105.",
+      "zh": "自 1898 年起，新疆北部多地已知存在体量巨大的陨铁。其中最著名的是重达 28 吨、民间誉为“银骆驼”的阿尔曼提陨铁；后续又相继发现 5 吨重的乌希里克陨铁和 430 千克重的乌拉斯台陨铁。化学与岩石学研究证实，这些地理上分散的陨铁彼此成对，同属远古时期的一次陨落事件。它们的散落带自西北向东南绵延约 425 千米，横跨北疆。各个体仍保留历史地方名称，而整个陨石体系于 2016 年 11 月 27 日正式获批统一定名为“阿勒泰”，并刊载于《陨石通报》第 105 期。"
     }
   },
   {
@@ -492,8 +492,8 @@ const SPECIMENS = [
       "zh": "其富镍无纹铁状金属源自古老小行星，但化学成分尚不属于任一已建立的铁陨石群。穿越大气层后的高速撞击将其破碎为尖锐的金属弹片。"
     },
     "geology": {
-      "en": "An Italian-Egyptian geophysical expedition recovered fragments inside and around the crater after it was identified in satellite imagery. Pieces range from under 1 g to 35 kg, alongside one 83 kg individual; about 800 kg was recovered in the field. Published in Meteoritical Bulletin 98.",
-      "zh": "卫星影像首先识别出撞击坑后，意大利—埃及联合地球物理考察队在坑内及周边回收了大量碎块。个体从不足 1 克到 35 千克不等，并有一块 83 千克的完整个体；实地约回收 800 千克。记载于《陨石通报》第 98 期。"
+      "en": "V. De Michele first identified the Kamil crater in satellite imagery. On 19 February 2009, an Italian-Egyptian geophysical expedition investigated the 45 m impact crater in Egypt's East Uweinat Desert and recovered meteorite material from inside and around it. The site contains thousands of shrapnel-like fragments ranging from under 1 g to 35 kg, plus one complete 83 kg individual covered with regmaglypts. The estimated total known mass is about 1.6 tonnes, of which roughly 800 kg was physically recovered during fieldwork. Gebel Kamil was approved on 12 July 2010 and published in Meteoritical Bulletin 98.",
+      "zh": "学者 V·德·米凯莱最早通过卫星影像识别出卡米尔撞击坑。2009 年 2 月 19 日，意大利—埃及联合地球物理考察队进入埃及东乌韦纳特沙漠，对这座直径约 45 米的撞击坑展开勘察，并在坑内及周边回收陨铁。现场散布着数千枚弹片状碎块，个体重量从不足 1 克到 35 千克不等；其间还有一块重 83 千克、通体覆盖熔蚀凹坑的完整个体。该陨石估计已知总质量约 1.6 吨，其中约 800 千克由科考队在实地回收。杰贝勒·卡米尔于 2010 年 7 月 12 日获批，并刊载于《陨石通报》第 98 期。"
     }
   },
   {
@@ -849,8 +849,8 @@ const SPECIMENS = [
       "zh": "其铁镍晶体纹理记录了古老分异小行星金属内部极其缓慢的冷却过程，化学分类属于 IVA 群。"
     },
     "geology": {
-      "en": "The first fragment was found in excavated material used for a causeway. Multiple later recoveries came from a broad strewn field in northern Sweden. Classification references include Meteoritical Bulletin 20 and 28.",
-      "zh": "首枚碎块由卡尔·亨里克松在修筑堤道的开挖物中发现，后续标本来自瑞典北部广阔的散落区。分类记录见《陨石通报》第 20 期与第 28 期。"
+      "en": "The first Muonionalusta fragment was discovered near Kitkiöjärvi in 1906. Further specimens emerged during earthworks in 1946 and again in 1963, when Carl Henriksson found material excavated for construction of a causeway. The recoveries are dispersed across a broad strewn field in northern Sweden rather than a single find spot. Representative material is curated by the Swedish Museum of Natural History in Stockholm, and the meteorite was published in Meteoritical Bulletin 20 and 28.",
+      "zh": "1906 年，穆奥尼奥纳鲁斯塔的首枚陨铁碎片在瑞典基特基约尔维附近被发现。1946 年和 1963 年，当地土方开垦与堤道修筑工程又陆续挖出新标本；卡尔·亨里克松曾在修筑堤道的开挖物中找到其中一枚。这些碎块散布于瑞典北部广阔的散落区，代表性标本现由斯德哥尔摩瑞典自然历史博物馆典藏。相关发现刊载于《陨石通报》第 20 期和第 28 期。"
     }
   },
   {
@@ -1026,8 +1026,8 @@ const SPECIMENS = [
       "zh": "IAB 群铁陨石与经历复杂、部分分异的母体物质有关。缓慢冷却使铁镍相分离，并保存下现今可见的晶体结构。"
     },
     "geology": {
-      "en": "A cattleman found the first 29 kg mass in 1992 on land belonging to Wilson Rezende. Three additional masses—25.2 kg, 300 g, and 18 kg—were later recovered there. Published in Meteoritical Bulletin 86.",
-      "zh": "1992 年，牧人在威尔逊·雷曾德的土地上发现首块 29 千克个体；此后又在同地找到 25.2 千克、300 克和 18 千克三块个体。记载于《陨石通报》第 86 期。"
+      "en": "In 1992 a cattleman discovered the first Uruaçu mass, weighing 29 kg, on property belonging to Wilson Rezende in Goiás, Brazil. Continued searches of the same land produced three more individuals weighing 25.2 kg, 300 g, and 18 kg. Together the four recoveries established a reported total known mass of 72.5 kg and showed that the material belonged to one local strewn field. Uruaçu was published in Meteoritical Bulletin 86 and is now recommended as an IAB-MG iron meteorite.",
+      "zh": "1992 年，一名牧人在巴西戈亚斯州威尔逊·雷曾德先生的私属土地上，发现了重 29 千克的首块乌鲁阿苏陨铁。此后人们继续在同一片土地寻找，又陆续回收了 25.2 千克、300 克和 18 千克三块个体。四块陨铁的已知总质量为 72.5 千克，并构成同一处当地散落区的发现记录。该陨石刊载于《陨石通报》第 86 期，现推荐分类为 IAB-MG 主群铁陨石。"
     }
   },
   {
