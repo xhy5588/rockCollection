@@ -51937,6 +51937,9 @@ var OrbitControls = class extends EventDispatcher {
 
 // rock-model-src.js
 var import_three_usdz_loader = __toESM(require_USDZLoader());
+var sharedUsdLoader = null;
+var sharedUsdLoaderPath = null;
+var usdLoadQueue = Promise.resolve();
 function resolveUrl(path) {
   if (typeof window !== "undefined" && window.siteUrl) {
     return window.siteUrl(path);
@@ -51949,6 +51952,49 @@ function isMobile() {
 function setStatus(statusEl, text) {
   if (statusEl && text) statusEl.textContent = text;
 }
+function getUsdLoader(wasmPath) {
+  if (!sharedUsdLoader || sharedUsdLoaderPath !== wasmPath) {
+    sharedUsdLoader = new import_three_usdz_loader.USDZLoader(wasmPath);
+    sharedUsdLoaderPath = wasmPath;
+  }
+  return sharedUsdLoader;
+}
+function loadUsdFile(file, group, wasmPath) {
+  const run = async () => {
+    const loader = getUsdLoader(wasmPath);
+    try {
+      return await loader.loadFile(file, group);
+    } catch (err) {
+      if (/memory access out of bounds/i.test(String(err?.message || err))) {
+        sharedUsdLoader = null;
+        sharedUsdLoaderPath = null;
+      }
+      throw err;
+    }
+  };
+  const result = usdLoadQueue.then(run, run);
+  usdLoadQueue = result.catch(() => {
+  });
+  return result;
+}
+function disposeObjectResources(root) {
+  const textures = /* @__PURE__ */ new Set();
+  const materials = /* @__PURE__ */ new Set();
+  const geometries = /* @__PURE__ */ new Set();
+  root.traverse((object) => {
+    if (object.geometry) geometries.add(object.geometry);
+    const objectMaterials = Array.isArray(object.material) ? object.material : object.material ? [object.material] : [];
+    for (const material of objectMaterials) {
+      materials.add(material);
+      for (const value of Object.values(material)) {
+        if (value?.isTexture) textures.add(value);
+      }
+    }
+  });
+  for (const texture of textures) texture.dispose();
+  for (const material of materials) material.dispose();
+  for (const geometry of geometries) geometry.dispose();
+}
 function assert3dSupport(statusEl) {
   if (typeof WebGLRenderingContext === "undefined") {
     throw new Error("WebGL is not available in this browser.");
@@ -51960,7 +52006,7 @@ function assert3dSupport(statusEl) {
   }
   if (!window.crossOriginIsolated) {
     throw new Error(
-      "Browser security mode blocked 3D \u2014 use Safari or Chrome and refresh."
+      location.hostname === "localhost" || location.hostname === "127.0.0.1" ? "3D security headers are missing \u2014 run npm.cmd start (not Live Server), then refresh." : "Browser security mode blocked 3D \u2014 use Safari or Chrome and refresh."
     );
   }
 }
@@ -52030,7 +52076,6 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
   fill.position.set(-3, 1, -2);
   scene.add(fill);
   setStatus(statusEl, mobile ? "Downloading 3D engine (~10 MB)\u2026" : "Loading 3D engine\u2026");
-  const loader = new import_three_usdz_loader.USDZLoader(wasm);
   const group = new Group();
   scene.add(group);
   setStatus(statusEl, mobile ? "Downloading scan\u2026" : "Loading scan\u2026");
@@ -52040,7 +52085,21 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
   const fileName = url.split("/").pop() || "model.usdz";
   const file = new File([blob], fileName, { type: "model/vnd.usdz+zip" });
   setStatus(statusEl, mobile ? "Processing scan\u2026" : "Processing 3D model\u2026");
-  await loader.loadFile(file, group);
+  let usdInstance = null;
+  try {
+    usdInstance = await loadUsdFile(file, group, wasm);
+  } catch (err) {
+    controls.dispose();
+    renderer.dispose();
+    scene.clear();
+    host.innerHTML = "";
+    if (/memory access out of bounds/i.test(String(err?.message || err))) {
+      throw new Error(
+        "The 3D parser ran out of memory. Reload this page and open only one scan at a time."
+      );
+    }
+    throw err;
+  }
   const box = new Box3().setFromObject(group);
   const size = box.getSize(new Vector3());
   const center = box.getCenter(new Vector3());
@@ -52073,8 +52132,15 @@ async function mountRockViewer(host, { statusEl, wasmPath = "/wasm", modelUrl = 
     if (disposed) return;
     disposed = true;
     cancelAnimationFrame(rafId);
+    disposeObjectResources(group);
+    try {
+      usdInstance?.clear?.();
+    } catch (err) {
+      console.warn("Could not fully release the USDZ model", err);
+    }
     controls.dispose();
     renderer.dispose();
+    scene.clear();
     window.removeEventListener("resize", onResize);
     host.innerHTML = "";
   }

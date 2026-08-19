@@ -23,6 +23,7 @@ function mountScanFrame(host, id, status) {
   const iframe = document.createElement("iframe");
   iframe.src = scanFrameUrl(id);
   iframe.title = "3D scan";
+  iframe.allow = "cross-origin-isolated";
   iframe.setAttribute("loading", "lazy");
   iframe.style.border = "0";
   iframe.style.width = "100%";

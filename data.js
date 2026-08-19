@@ -3,7 +3,50 @@
 
 const SPECIMENS = [
   {
+    "id": "aletai",
+    "origin": "meteorite",
+    "name": {
+      "en": "Aletai",
+      "zh": "阿勒泰"
+    },
+    "mineralClass": {
+      "en": "Iron meteorite · IIIE-an",
+      "zh": "铁陨石 · IIIE-an（异常 IIIE 群）"
+    },
+    "locality": {
+      "en": "Xinjiang, China · first mass found 1898",
+      "zh": "中国新疆 · 1898 年首次发现"
+    },
+    "province": "meteorite",
+    "coords": null,
+    "accent": "#8da3ad",
+    "color1": "#cbd5d9",
+    "color2": "#384b52",
+    "cover": "images/specimens/aletai/01.jpg",
+    "photos": [
+      "images/specimens/aletai/01.jpg"
+    ],
+    "model3d": "models/aletai.usdz",
+    "summary": {
+      "en": "A IIIE-an iron meteorite from northern Xinjiang. Its many paired masses, including the 28-tonne Armanty or Silver Camel, give the Aletai event a reported total known mass above 74 tonnes.",
+      "zh": "来自新疆北部的 IIIE-an 铁陨石。包括 28 吨“银骆驼”阿尔曼提在内的多块成对陨铁，使阿勒泰陨石的已知总质量超过 74 吨。"
+    },
+    "appearance": {
+      "en": "The etched, roughly quadrilateral slice displays a bold interlocking Widmanstätten pattern. Broad iron-nickel lamellae and darker intervening fields create a strongly geometric surface.",
+      "zh": "近四边形酸蚀切片展现出鲜明交错的魏德曼花纹；宽阔的铁镍晶片与较暗的间隔区域构成强烈的几何纹理。"
+    },
+    "formation": {
+      "en": "The pattern formed as an iron-nickel body cooled extremely slowly inside an ancient asteroid. Chemical and petrologic work groups the dispersed Xinjiang masses into one anomalous IIIE fall event.",
+      "zh": "这些纹理形成于古老小行星内部铁镍物质的极缓慢冷却。化学与岩石学研究证明，新疆各地的巨型陨铁属于同一次异常 IIIE 陨落事件。"
+    },
+    "geology": {
+      "en": "Large masses have been known since 1898. Later finds include Wuxilike at 5 tonnes and Ulasitai at 430 kg. The paired strewn field extends roughly 425 km northwest to southeast across northern Xinjiang; the collective name Aletai was approved in 2016.",
+      "zh": "自 1898 年起当地已知多块巨型陨铁，后续发现包括 5 吨的乌希里克与 430 千克的乌拉斯台。成对散落带沿西北至东南方向延伸约 425 千米，2016 年统一获批定名为“阿勒泰”。"
+    }
+  },
+  {
     "id": "bornite",
+    "origin": "earth",
     "name": {
       "en": "Bornite",
       "zh": "斑铜矿"
@@ -48,6 +91,7 @@ const SPECIMENS = [
   },
   {
     "id": "orpiment-realgar",
+    "origin": "earth",
     "name": {
       "en": "Orpiment & Realgar",
       "zh": "雌黄雄黄共生矿"
@@ -93,6 +137,7 @@ const SPECIMENS = [
   },
   {
     "id": "sodalite",
+    "origin": "earth",
     "name": {
       "en": "Sodalite",
       "zh": "方钠石"
@@ -137,6 +182,7 @@ const SPECIMENS = [
   },
   {
     "id": "fanta-garnet",
+    "origin": "earth",
     "name": {
       "en": "Fanta Garnet",
       "zh": "芬达石榴石"
@@ -181,6 +227,7 @@ const SPECIMENS = [
   },
   {
     "id": "phoenix-turquoise",
+    "origin": "earth",
     "name": {
       "en": "Phoenix Turquoise",
       "zh": "凤凰松石"
@@ -225,6 +272,7 @@ const SPECIMENS = [
   },
   {
     "id": "fluelite",
+    "origin": "earth",
     "name": {
       "en": "Fluelite",
       "zh": "氟铝石膏"
@@ -269,6 +317,7 @@ const SPECIMENS = [
   },
   {
     "id": "turtle-stone",
+    "origin": "earth",
     "name": {
       "en": "Turtle Stone (Iron Nodule)",
       "zh": "龟纹石"
@@ -317,6 +366,7 @@ const SPECIMENS = [
   },
   {
     "id": "ruby",
+    "origin": "earth",
     "name": {
       "en": "Ruby (Corundum)",
       "zh": "红刚玉"
@@ -361,6 +411,7 @@ const SPECIMENS = [
   },
   {
     "id": "pyrite",
+    "origin": "earth",
     "name": {
       "en": "Pyrite",
       "zh": "黄铁矿"
@@ -404,7 +455,50 @@ const SPECIMENS = [
     }
   },
   {
+    "id": "gebel-kamil",
+    "origin": "meteorite",
+    "name": {
+      "en": "Gebel Kamil",
+      "zh": "杰贝勒·卡米尔"
+    },
+    "mineralClass": {
+      "en": "Iron meteorite · Ungrouped · Ni-rich ataxite",
+      "zh": "铁陨石 · 未分群 · 富镍无纹铁"
+    },
+    "locality": {
+      "en": "East Uweinat Desert, Egypt · found 2009",
+      "zh": "埃及东乌韦纳特沙漠 · 2009 年发现"
+    },
+    "province": "meteorite",
+    "coords": null,
+    "accent": "#a27b5c",
+    "color1": "#b7a18d",
+    "color2": "#292524",
+    "cover": "images/specimens/gebel-kamil/01.jpg",
+    "photos": [
+      "images/specimens/gebel-kamil/01.jpg"
+    ],
+    "model3d": "models/gebel-kamil.usdz",
+    "summary": {
+      "en": "An ungrouped, nickel-rich iron meteorite discovered at Egypt's 45 m Kamil impact crater in 2009. Thousands of shrapnel-like fragments represent a reported total known mass of about 1.6 tonnes.",
+      "zh": "2009 年在埃及直径约 45 米的卡米尔撞击坑发现的未分群富镍铁陨石。现场散布数千枚弹片状碎块，已知总质量约 1.6 吨。"
+    },
+    "appearance": {
+      "en": "This uncut fragment retains an irregular shrapnel-like form, a dark weathered fusion surface, shallow depressions, and sharp torn edges produced during the impact breakup.",
+      "zh": "这枚未切割原石保留了不规则的弹片状外形、深色风化熔壳、浅凹坑，以及撞击破碎时产生的尖锐撕裂边缘。"
+    },
+    "formation": {
+      "en": "Its nickel-rich ataxite-like metal came from an ancient asteroid, but its chemistry does not place it in an established iron-meteorite group. Atmospheric entry and impact fragmented the mass into sharp metallic shrapnel.",
+      "zh": "其富镍无纹铁状金属源自古老小行星，但化学成分尚不属于任一已建立的铁陨石群。穿越大气层后的高速撞击将其破碎为尖锐的金属弹片。"
+    },
+    "geology": {
+      "en": "An Italian-Egyptian geophysical expedition recovered fragments inside and around the crater after it was identified in satellite imagery. Pieces range from under 1 g to 35 kg, alongside one 83 kg individual; about 800 kg was recovered in the field. Published in Meteoritical Bulletin 98.",
+      "zh": "卫星影像首先识别出撞击坑后，意大利—埃及联合地球物理考察队在坑内及周边回收了大量碎块。个体从不足 1 克到 35 千克不等，并有一块 83 千克的完整个体；实地约回收 800 千克。记载于《陨石通报》第 98 期。"
+    }
+  },
+  {
     "id": "calcite",
+    "origin": "earth",
     "name": {
       "en": "Weathered Calcite",
       "zh": "枯方解"
@@ -449,6 +543,7 @@ const SPECIMENS = [
   },
   {
     "id": "lazulite",
+    "origin": "earth",
     "name": {
       "en": "Lazulite",
       "zh": "蓝磷灰"
@@ -493,6 +588,7 @@ const SPECIMENS = [
   },
   {
     "id": "azurite",
+    "origin": "earth",
     "name": {
       "en": "Azurite",
       "zh": "蓝铜矿"
@@ -537,6 +633,7 @@ const SPECIMENS = [
   },
   {
     "id": "azurite-fluorite",
+    "origin": "earth",
     "name": {
       "en": "Azurite–Fluorite Paragenesis",
       "zh": "蓝铜矿荧石共生"
@@ -581,6 +678,7 @@ const SPECIMENS = [
   },
   {
     "id": "carbonite",
+    "origin": "earth",
     "name": {
       "en": "Carbonte / Blue Carbonate",
       "zh": "蓝文石"
@@ -625,6 +723,7 @@ const SPECIMENS = [
   },
   {
     "id": "blue-fluorite",
+    "origin": "earth",
     "name": {
       "en": "Blue Fluorite",
       "zh": "蓝萤石"
@@ -669,6 +768,7 @@ const SPECIMENS = [
   },
   {
     "id": "phosphophyllite",
+    "origin": "earth",
     "name": {
       "en": "Phosphophyllite",
       "zh": "磷酸锌铜"
@@ -712,7 +812,50 @@ const SPECIMENS = [
     }
   },
   {
+    "id": "muonionalusta",
+    "origin": "meteorite",
+    "name": {
+      "en": "Muonionalusta",
+      "zh": "穆奥尼奥纳鲁斯塔"
+    },
+    "mineralClass": {
+      "en": "Iron meteorite · IVA · Fine octahedrite",
+      "zh": "铁陨石 · IVA 群 · 精细八面体"
+    },
+    "locality": {
+      "en": "Kitkiöjärvi, Sweden · found 1906",
+      "zh": "瑞典基特基约尔维 · 1906 年发现"
+    },
+    "province": "meteorite",
+    "coords": null,
+    "accent": "#94a3b8",
+    "color1": "#dbe4ea",
+    "color2": "#475569",
+    "cover": "images/specimens/muonionalusta/01.jpg",
+    "photos": [
+      "images/specimens/muonionalusta/01.jpg"
+    ],
+    "model3d": "models/muonionalusta.usdz",
+    "summary": {
+      "en": "A find-type IVA iron meteorite first recovered near Kitkiöjärvi in 1906. Later finds in 1946 and 1963 expanded the known strewn field; the reported total known mass is about 230 kg.",
+      "zh": "一块发现型 IVA 群铁陨石。1906 年首次在瑞典基特基约尔维附近发现，1946 年与 1963 年又有新标本出土，已知总质量约 230 千克。"
+    },
+    "appearance": {
+      "en": "The etched cut face shows a very fine, interlocking Widmanstätten pattern, with narrow metallic lamellae crossing at multiple angles and a weathered natural edge still visible.",
+      "zh": "酸蚀切面呈现极细密的魏德曼花纹，狭窄的金属晶片以多个角度交错，边缘仍保留部分风化原皮。"
+    },
+    "formation": {
+      "en": "Its iron-nickel crystal pattern records extremely slow cooling inside the metallic interior of an ancient differentiated asteroid. It is classified in the IVA chemical group.",
+      "zh": "其铁镍晶体纹理记录了古老分异小行星金属内部极其缓慢的冷却过程，化学分类属于 IVA 群。"
+    },
+    "geology": {
+      "en": "The first fragment was found in excavated material used for a causeway. Multiple later recoveries came from a broad strewn field in northern Sweden. Classification references include Meteoritical Bulletin 20 and 28.",
+      "zh": "首枚碎块由卡尔·亨里克松在修筑堤道的开挖物中发现，后续标本来自瑞典北部广阔的散落区。分类记录见《陨石通报》第 20 期与第 28 期。"
+    }
+  },
+  {
     "id": "prehnite",
+    "origin": "earth",
     "name": {
       "en": "Prehnite",
       "zh": "葡萄石"
@@ -757,6 +900,7 @@ const SPECIMENS = [
   },
   {
     "id": "tanzanite-quartz",
+    "origin": "earth",
     "name": {
       "en": "Terahertz Stone",
       "zh": "太赫兹石"
@@ -801,6 +945,7 @@ const SPECIMENS = [
   },
   {
     "id": "pink-tourmaline",
+    "origin": "earth",
     "name": {
       "en": "Pink Tourmaline",
       "zh": "桃花碧玺"
@@ -844,7 +989,50 @@ const SPECIMENS = [
     }
   },
   {
+    "id": "uruacu",
+    "origin": "meteorite",
+    "name": {
+      "en": "Uruaçu",
+      "zh": "乌鲁阿苏"
+    },
+    "mineralClass": {
+      "en": "Iron meteorite · IAB-MG",
+      "zh": "铁陨石 · IAB-MG 主群"
+    },
+    "locality": {
+      "en": "Goiás, Brazil · found 1992",
+      "zh": "巴西戈亚斯州 · 1992 年发现"
+    },
+    "province": "meteorite",
+    "coords": null,
+    "accent": "#b08a6b",
+    "color1": "#d6c2ad",
+    "color2": "#5c4033",
+    "cover": "images/specimens/uruacu/01.jpg",
+    "photos": [
+      "images/specimens/uruacu/01.jpg"
+    ],
+    "model3d": "models/uruacu.usdz",
+    "summary": {
+      "en": "A find-type IAB-MG iron meteorite from Goiás, Brazil. Four masses were recovered on the same property, with a reported combined known mass of 72.5 kg.",
+      "zh": "来自巴西戈亚斯州的发现型 IAB-MG 主群铁陨石。同一处土地上先后发现四块个体，已知总质量约 72.5 千克。"
+    },
+    "appearance": {
+      "en": "The broad etched slice exposes a comparatively coarse metallic crystal pattern, crossed by fine fractures and bordered by patches of reddish-brown terrestrial oxidation.",
+      "zh": "宽阔的酸蚀切片显示出相对粗大的金属晶体纹理，表面可见细小裂隙，边缘保留红褐色的地表氧化痕迹。"
+    },
+    "formation": {
+      "en": "IAB irons are linked to complex, partly differentiated parent-body material. Slow cooling allowed iron-nickel phases to separate and preserve the visible crystalline texture.",
+      "zh": "IAB 群铁陨石与经历复杂、部分分异的母体物质有关。缓慢冷却使铁镍相分离，并保存下现今可见的晶体结构。"
+    },
+    "geology": {
+      "en": "A cattleman found the first 29 kg mass in 1992 on land belonging to Wilson Rezende. Three additional masses—25.2 kg, 300 g, and 18 kg—were later recovered there. Published in Meteoritical Bulletin 86.",
+      "zh": "1992 年，牧人在威尔逊·雷曾德的土地上发现首块 29 千克个体；此后又在同地找到 25.2 千克、300 克和 18 千克三块个体。记载于《陨石通报》第 86 期。"
+    }
+  },
+  {
     "id": "hemimorphite",
+    "origin": "earth",
     "name": {
       "en": "Hemimorphite",
       "zh": "异极矿"
@@ -890,6 +1078,7 @@ const SPECIMENS = [
   },
   {
     "id": "fluorite",
+    "origin": "earth",
     "name": {
       "en": "Fluorite",
       "zh": "萤石"
@@ -937,10 +1126,21 @@ const SPECIMENS = [
 const UI_STRINGS = {
   en: {
     brand: "Peaks & Pebbles",
+    navHome: "Home",
+    navEarth: "Earth Rocks",
+    navMeteorites: "Meteorites",
     map: "Collection Map",
     specimen3d: "3D Scan",
-    collection: "Full Collection",
+    collection: "Earth Collection",
     about: "About",
+    splitEarthEyebrow: "Field-collected minerals",
+    splitEarthTitle: "Rocks from Earth",
+    splitEarthLede: "Crystals, ores, and stones from my sampling trips across Yunnan, Fujian, Guangdong, and Hunan.",
+    splitEarthCta: "Explore collection →",
+    splitSpaceEyebrow: "Rocks from beyond",
+    splitSpaceTitle: "Meteorites",
+    splitSpaceLede: "Fragments of asteroids and comets that fell to Earth — witnesses to the cosmos.",
+    splitSpaceCta: "Explore meteorites →",
     eyebrow: "Field notes · Yunnan & beyond",
     heroTitle: "Real Rocks,<br />Real Field Notes",
     heroLede:
@@ -958,9 +1158,19 @@ const UI_STRINGS = {
     specimenHint: "Run node serve.js and open http://localhost:8080 for the interactive 3D viewer.",
     openViewer: "Open full-screen 3D viewer →",
     arLink: "View in AR on iPhone →",
-    collectionTitle: "Full Collection",
+    collectionTitle: "Earth Collection",
     collectionSub:
       "Every specimen with bilingual field notes, field photos, and 3D scans where available.",
+    meteoriteTitle: "Meteorites from Space",
+    meteoriteSub:
+      "Extraterrestrial rocks — iron, stony, and stony-iron specimens from falls and finds.",
+    meteoritePlaceholder: "Select a meteorite to read its research notes.",
+    meteoriteEmpty: "Meteorite specimens coming soon — check back as the space collection grows.",
+    meteoriteViewDetails: "View details",
+    meteoriteBack: "← Back to meteorites",
+    meteoriteRecord: "Meteorite research record",
+    meteoriteNotFound: "Meteorite not found",
+    meteoriteNotFoundText: "This record does not exist. Return to the meteorite collection and choose a specimen.",
     collectionTabPhoto: "Photo",
     collectionTab3d: "3D Scan",
     collection3dLoading: "Loading 3D model…",
@@ -973,7 +1183,11 @@ const UI_STRINGS = {
     aboutTitle: "About this journal",
     aboutText:
       "Every specimen here was located, sampled, photographed, and written up by me — from Ailao Shan hemimorphite to Chenzhou turtle stone. This site pairs my Chinese research notebooks with English translations so the collection can be shared with classmates and friends abroad.",
+    aboutMeteoriteText:
+      "Meteorites in this collection are documented with the same bilingual research notes as my Earth specimens — classification, appearance, origin, and cosmic context.",
     statSpecimens: "specimens",
+    statEarth: "earth specimens",
+    statMeteorites: "meteorites",
     statProvinces: "provinces",
     statField: "field-collected",
     footer: "Peaks & Pebbles · Personal mineral research journal",
@@ -981,16 +1195,29 @@ const UI_STRINGS = {
     panelAppearance: "Appearance & structure",
     panelFormation: "Formation (hypothesis)",
     panelGeology: "Regional geology",
+    panelCosmicOrigin: "Cosmic origin",
+    panelDiscovery: "Discovery record",
     panelPhotos: "Field photos",
     noFieldPhoto: "No field photo",
     langLabel: "中文",
   },
   zh: {
     brand: "峰石笔记",
+    navHome: "首页",
+    navEarth: "地球岩石",
+    navMeteorites: "陨石",
     map: "标本地图",
     specimen3d: "3D 扫描",
-    collection: "全部标本",
+    collection: "地球标本",
     about: "关于",
+    splitEarthEyebrow: "野外采集矿物",
+    splitEarthTitle: "来自地球的岩石",
+    splitEarthLede: "在云南、福建、广东、湖南等地亲自采集的晶体、矿石与岩石标本。",
+    splitEarthCta: "探索标本集 →",
+    splitSpaceEyebrow: "来自宇宙的岩石",
+    splitSpaceTitle: "陨石",
+    splitSpaceLede: "小行星与彗星的碎片坠落于地球——宇宙历史的见证者。",
+    splitSpaceCta: "探索陨石 →",
     eyebrow: "野外笔记 · 云南及周边",
     heroTitle: "真实的石头，<br />真实的笔记",
     heroLede:
@@ -1006,8 +1233,17 @@ const UI_STRINGS = {
     specimenHint: "运行 node serve.js 后打开 http://localhost:8080 查看交互式 3D。",
     openViewer: "打开全屏 3D 查看器 →",
     arLink: "在 iPhone 上 AR 查看 →",
-    collectionTitle: "全部标本",
+    collectionTitle: "地球标本集",
     collectionSub: "每件标本均附有中英文笔记、野外照片，以及可用的 3D 扫描。",
+    meteoriteTitle: "来自太空的陨石",
+    meteoriteSub: "地外岩石——铁陨石、石陨石与石铁陨石，来自陨落与发现标本。",
+    meteoritePlaceholder: "选择一块陨石阅读研究笔记。",
+    meteoriteEmpty: "陨石标本即将上线——随着太空收藏的增长，欢迎再来查看。",
+    meteoriteViewDetails: "查看详情",
+    meteoriteBack: "← 返回陨石收藏",
+    meteoriteRecord: "陨石研究档案",
+    meteoriteNotFound: "未找到陨石",
+    meteoriteNotFoundText: "该档案不存在。请返回陨石收藏并选择一块标本。",
     collectionTabPhoto: "照片",
     collectionTab3d: "3D 扫描",
     collection3dLoading: "正在加载 3D 模型…",
@@ -1020,7 +1256,11 @@ const UI_STRINGS = {
     aboutTitle: "关于这份笔记",
     aboutText:
       "这里的每一块标本都是我亲自找点、采样、拍照并完成研究笔记的——从哀牢山异极矿到郴州龟纹石。网站将中文研究笔记与英文翻译并列，方便与同学和朋友分享。",
+    aboutMeteoriteText:
+      "陨石收藏与地球标本采用相同的中英文研究笔记格式——分类、外观、来源与宇宙背景。",
     statSpecimens: "件标本",
+    statEarth: "件地球标本",
+    statMeteorites: "块陨石",
     statProvinces: "个省份",
     statField: "野外采集",
     footer: "峰石笔记 · 个人矿石研究日志",
@@ -1028,6 +1268,8 @@ const UI_STRINGS = {
     panelAppearance: "外观与结构",
     panelFormation: "形成过程（推测）",
     panelGeology: "区域地质",
+    panelCosmicOrigin: "宇宙起源",
+    panelDiscovery: "发现记录",
     panelPhotos: "野外照片",
     noFieldPhoto: "暂无野外照片",
     langLabel: "EN",

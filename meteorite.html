@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Origin-Agent-Cluster" content="?1" />
+    <title>Meteorite Record — Peaks &amp; Pebbles</title>
+    <meta
+      name="description"
+      content="Bilingual meteorite research record with specimen photography and an interactive 3D scan."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="site-base.js"></script>
+  </head>
+  <body data-page="meteorite-detail">
+    <header class="detail-hero detail-hero--space">
+      <div class="detail-hero__overlay"></div>
+      <nav class="nav">
+        <a href="index.html" class="nav__brand" data-i18n="brand">Peaks &amp; Pebbles</a>
+        <div class="nav__links">
+          <a href="index.html" data-i18n="navHome">Home</a>
+          <a href="earth.html" data-i18n="navEarth">Earth Rocks</a>
+          <a href="meteorites.html" class="nav__link--active" data-i18n="navMeteorites">Meteorites</a>
+          <button type="button" id="lang-toggle" class="lang-toggle" aria-label="Switch language">EN</button>
+        </div>
+      </nav>
+      <div class="detail-hero__content">
+        <a class="detail-hero__back" href="meteorites.html" data-i18n="meteoriteBack">← Back to meteorites</a>
+        <p class="detail-hero__eyebrow" data-i18n="meteoriteRecord">Meteorite research record</p>
+        <h1 id="meteorite-detail-name" class="detail-hero__title">Meteorite</h1>
+        <p id="meteorite-detail-class" class="detail-hero__lede"></p>
+      </div>
+    </header>
+
+    <main>
+      <section id="meteorite-detail" class="meteorite-detail-section" aria-live="polite"></section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer">Peaks &amp; Pebbles · Personal mineral research journal</p>
+    </footer>
+
+    <script type="module" src="collection-3d.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

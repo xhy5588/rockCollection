@@ -7,13 +7,7 @@
     <title>Peaks &amp; Pebbles — Mineral Research Journal</title>
     <meta
       name="description"
-      content="Personal mineral specimen collection from Yunnan, Fujian, Guangdong, and Hunan — bilingual field research notes."
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
+      content="Personal mineral and meteorite collection — field-collected Earth rocks from Yunnan, Fujian, Guangdong, and Hunan, plus rocks from space."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,78 +18,37 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="site-base.js"></script>
   </head>
-  <body>
-    <header class="hero">
-      <div class="hero__overlay"></div>
+  <body data-page="home">
+    <header class="split-hero">
       <nav class="nav">
-        <span class="nav__brand" data-i18n="brand">Peaks &amp; Pebbles</span>
+        <a href="index.html" class="nav__brand" data-i18n="brand">Peaks &amp; Pebbles</a>
         <div class="nav__links">
-          <a href="#map" data-i18n="map">Collection Map</a>
-          <a href="#collection" data-i18n="collection">Full Collection</a>
-          <a href="#about" data-i18n="about">About</a>
+          <a href="earth.html" data-i18n="navEarth">Earth Rocks</a>
+          <a href="meteorites.html" data-i18n="navMeteorites">Meteorites</a>
           <button type="button" id="lang-toggle" class="lang-toggle" aria-label="Switch language">EN</button>
         </div>
       </nav>
-      <div class="hero__content">
-        <p class="hero__eyebrow" data-i18n="eyebrow">Field notes · Yunnan &amp; beyond</p>
-        <h1 class="hero__title" data-i18n="heroTitle" data-i18n-html="true">Real Rocks,<br />Real Field Notes</h1>
-        <p class="hero__lede" data-i18n="heroLede">
-          A personal mineral collection built from my own sampling trips across Yunnan, Fujian, Guangdong, and Hunan.
-        </p>
-        <a class="hero__cta" href="#map" data-i18n="heroCta">Explore the map ↓</a>
+      <div class="split-hero__halves">
+        <a class="split-hero__half split-hero__half--earth" href="earth.html">
+          <span class="split-hero__eyebrow" data-i18n="splitEarthEyebrow">Field-collected minerals</span>
+          <h1 class="split-hero__title" data-i18n="splitEarthTitle">Rocks from Earth</h1>
+          <p class="split-hero__lede" data-i18n="splitEarthLede">Crystals, ores, and stones from my sampling trips across China.</p>
+          <span class="split-hero__cta" data-i18n="splitEarthCta">Explore collection →</span>
+        </a>
+        <a class="split-hero__half split-hero__half--space" href="meteorites.html">
+          <span class="split-hero__eyebrow" data-i18n="splitSpaceEyebrow">Rocks from beyond</span>
+          <h1 class="split-hero__title" data-i18n="splitSpaceTitle">Meteorites</h1>
+          <p class="split-hero__lede" data-i18n="splitSpaceLede">Fragments of asteroids and comets that fell to Earth — witnesses to the cosmos.</p>
+          <span class="split-hero__cta" data-i18n="splitSpaceCta">Explore meteorites →</span>
+        </a>
       </div>
     </header>
 
-    <main>
-      <section id="map" class="map-section">
-        <div class="section-head">
-          <h2 data-i18n="mapTitle">Collection Map</h2>
-          <p data-i18n="mapSub">Click a marker to open field notes for that specimen.</p>
-        </div>
-        <div class="map-layout">
-          <div id="leaflet-map" class="map" role="application" aria-label="Map of mineral collection sites"></div>
-          <aside id="detail-panel" class="panel panel--empty" aria-live="polite">
-            <div class="panel__placeholder">
-              <span class="panel__placeholder-icon">🪨</span>
-              <p data-i18n="mapPlaceholder">Select a specimen on the map to begin.</p>
-              <ul id="peak-quicklist" class="quicklist"></ul>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section id="collection" class="collection-section">
-        <div class="section-head">
-          <h2 data-i18n="collectionTitle">Full Collection</h2>
-          <p data-i18n="collectionSub">Every specimen with bilingual field notes from my research notebooks.</p>
-        </div>
-        <div id="collection-grid" class="collection-grid"></div>
-      </section>
-
-      <section id="about" class="about-section">
-        <div class="about-card">
-          <h2 data-i18n="aboutTitle">About this journal</h2>
-          <p data-i18n="aboutText">Every specimen here was located, sampled, and written up by me.</p>
-          <p class="about-stats">
-            <span><strong id="stat-specimens">14</strong> <span data-i18n="statSpecimens">specimens</span></span>
-            <span><strong id="stat-provinces">4</strong> <span data-i18n="statProvinces">provinces</span></span>
-            <span><strong>100%</strong> <span data-i18n="statField">field-collected</span></span>
-          </p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
+    <footer class="footer footer--home">
       <p data-i18n="footer">Peaks &amp; Pebbles · Personal mineral research journal</p>
     </footer>
 
-    <script type="module" src="collection-3d.js"></script>
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="home.js"></script>
   </body>
 </html>

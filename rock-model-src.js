@@ -2,6 +2,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { USDZLoader } from "three-usdz-loader";
 
+let sharedUsdLoader = null;
+let sharedUsdLoaderPath = null;
+let usdLoadQueue = Promise.resolve();
+
 function resolveUrl(path) {
   if (typeof window !== "undefined" && window.siteUrl) {
     return window.siteUrl(path);
@@ -20,6 +24,58 @@ function setStatus(statusEl, text) {
   if (statusEl && text) statusEl.textContent = text;
 }
 
+function getUsdLoader(wasmPath) {
+  if (!sharedUsdLoader || sharedUsdLoaderPath !== wasmPath) {
+    sharedUsdLoader = new USDZLoader(wasmPath);
+    sharedUsdLoaderPath = wasmPath;
+  }
+  return sharedUsdLoader;
+}
+
+function loadUsdFile(file, group, wasmPath) {
+  const run = async () => {
+    const loader = getUsdLoader(wasmPath);
+    try {
+      return await loader.loadFile(file, group);
+    } catch (err) {
+      if (/memory access out of bounds/i.test(String(err?.message || err))) {
+        sharedUsdLoader = null;
+        sharedUsdLoaderPath = null;
+      }
+      throw err;
+    }
+  };
+
+  const result = usdLoadQueue.then(run, run);
+  usdLoadQueue = result.catch(() => {});
+  return result;
+}
+
+function disposeObjectResources(root) {
+  const textures = new Set();
+  const materials = new Set();
+  const geometries = new Set();
+
+  root.traverse((object) => {
+    if (object.geometry) geometries.add(object.geometry);
+    const objectMaterials = Array.isArray(object.material)
+      ? object.material
+      : object.material
+        ? [object.material]
+        : [];
+    for (const material of objectMaterials) {
+      materials.add(material);
+      for (const value of Object.values(material)) {
+        if (value?.isTexture) textures.add(value);
+      }
+    }
+  });
+
+  for (const texture of textures) texture.dispose();
+  for (const material of materials) material.dispose();
+  for (const geometry of geometries) geometry.dispose();
+}
+
 function assert3dSupport(statusEl) {
   if (typeof WebGLRenderingContext === "undefined") {
     throw new Error("WebGL is not available in this browser.");
@@ -31,7 +87,9 @@ function assert3dSupport(statusEl) {
   }
   if (!window.crossOriginIsolated) {
     throw new Error(
-      "Browser security mode blocked 3D — use Safari or Chrome and refresh."
+      location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? "3D security headers are missing — run npm.cmd start (not Live Server), then refresh."
+        : "Browser security mode blocked 3D — use Safari or Chrome and refresh."
     );
   }
 }
@@ -119,7 +177,6 @@ export async function mountRockViewer(
 
   setStatus(statusEl, mobile ? "Downloading 3D engine (~10 MB)…" : "Loading 3D engine…");
 
-  const loader = new USDZLoader(wasm);
   const group = new THREE.Group();
   scene.add(group);
 
@@ -133,7 +190,21 @@ export async function mountRockViewer(
   const file = new File([blob], fileName, { type: "model/vnd.usdz+zip" });
 
   setStatus(statusEl, mobile ? "Processing scan…" : "Processing 3D model…");
-  await loader.loadFile(file, group);
+  let usdInstance = null;
+  try {
+    usdInstance = await loadUsdFile(file, group, wasm);
+  } catch (err) {
+    controls.dispose();
+    renderer.dispose();
+    scene.clear();
+    host.innerHTML = "";
+    if (/memory access out of bounds/i.test(String(err?.message || err))) {
+      throw new Error(
+        "The 3D parser ran out of memory. Reload this page and open only one scan at a time."
+      );
+    }
+    throw err;
+  }
 
   const box = new THREE.Box3().setFromObject(group);
   const size = box.getSize(new THREE.Vector3());
@@ -173,8 +244,15 @@ export async function mountRockViewer(
     if (disposed) return;
     disposed = true;
     cancelAnimationFrame(rafId);
+    disposeObjectResources(group);
+    try {
+      usdInstance?.clear?.();
+    } catch (err) {
+      console.warn("Could not fully release the USDZ model", err);
+    }
     controls.dispose();
     renderer.dispose();
+    scene.clear();
     window.removeEventListener("resize", onResize);
     host.innerHTML = "";
   }

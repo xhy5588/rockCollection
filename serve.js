@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = 8080;
+const PORT = Number(process.env.PORT || process.argv[2]) || 8080;
 const ROOT = __dirname;
 
 const MIME = {
@@ -46,6 +46,9 @@ function needsCredentiallessIsolation(urlPath) {
   return (
     p === "/" ||
     p === "/index.html" ||
+    p === "/earth.html" ||
+    p === "/meteorites.html" ||
+    p === "/meteorite.html" ||
     p === "/specimen-inline.js" ||
     p === "/collection-3d.js" ||
     p === "/viewer.html" ||

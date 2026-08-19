@@ -1,9 +1,14 @@
 /* global L, SPECIMENS, UI_STRINGS, MAP_CENTER */
 
+const PAGE = document.body.dataset.page || "earth";
+
 let currentLang = localStorage.getItem("lang") || "zh";
 let activeSpecimenId = null;
 let mapInstance = null;
 let markers = {};
+
+const earthSpecimens = SPECIMENS.filter((s) => s.origin !== "meteorite");
+const meteoriteSpecimens = SPECIMENS.filter((s) => s.origin === "meteorite");
 
 function t(key) {
   return UI_STRINGS[currentLang][key] || key;
@@ -18,13 +23,28 @@ function setLang(lang) {
   localStorage.setItem("lang", lang);
   document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
   applyStaticText();
-  buildCollection();
-  buildQuicklist(selectSpecimen);
-  if (activeSpecimenId) {
-    const s = SPECIMENS.find((x) => x.id === activeSpecimenId);
-    if (s) renderPanel(s);
+
+  if (PAGE === "earth") {
+    rebuildEarthCollection();
+    buildQuicklist(selectSpecimen);
+    if (activeSpecimenId) {
+      const s = earthSpecimens.find((x) => x.id === activeSpecimenId);
+      if (s) renderPanel(s, "detail-panel", (id) => {
+        activeSpecimenId = id;
+      });
+    }
   }
-  document.getElementById("lang-toggle").textContent = t("langLabel");
+
+  if (PAGE === "meteorites") {
+    rebuildMeteoriteCollection();
+  }
+
+  if (PAGE === "meteorite-detail") {
+    renderMeteoriteDetail();
+  }
+
+  const langToggle = document.getElementById("lang-toggle");
+  if (langToggle) langToggle.textContent = t("langLabel");
 }
 
 function applyStaticText() {
@@ -34,12 +54,18 @@ function applyStaticText() {
     if (el.dataset.i18nHtml === "true") el.innerHTML = val;
     else el.textContent = val;
   });
-  document.getElementById("stat-specimens").textContent = SPECIMENS.length;
-  document.getElementById("stat-provinces").textContent = new Set(
-    SPECIMENS.map((s) => s.province)
-  ).size;
-}
 
+  const statEarth = document.getElementById("stat-earth");
+  if (statEarth) statEarth.textContent = earthSpecimens.length;
+
+  const statMeteorites = document.getElementById("stat-meteorites");
+  if (statMeteorites) statMeteorites.textContent = meteoriteSpecimens.length;
+
+  const statProvinces = document.getElementById("stat-provinces");
+  if (statProvinces) {
+    statProvinces.textContent = new Set(earthSpecimens.map((s) => s.province)).size;
+  }
+}
 
 function specimenPhotoAlt(s) {
   return `${field(s.name)} — ${field(s.locality)}`;
@@ -90,14 +116,15 @@ function renderCollectionMedia(s) {
     </div>`;
 }
 
-function renderPanel3dAction(s) {
+function renderPanel3dAction(s, gridId) {
   if (!s.model3d) return "";
-  return `<button type="button" class="panel__3d-btn" data-id="${s.id}">${t("collectionView3d")}</button>`;
+  return `<button type="button" class="panel__3d-btn" data-id="${s.id}" data-grid="${gridId}">${t("collectionView3d")}</button>`;
 }
 
-function renderPanel(s) {
-  activeSpecimenId = s.id;
-  const panel = document.getElementById("detail-panel");
+function renderPanel(s, panelId, setActive) {
+  setActive(s.id);
+  const panel = document.getElementById(panelId);
+  const isMeteorite = s.origin === "meteorite";
   panel.classList.remove("panel--empty");
   panel.style.setProperty("--accent", s.accent);
   panel.innerHTML = `
@@ -106,59 +133,164 @@ function renderPanel(s) {
       <span class="panel__badge">${field(s.locality)}</span>
       <h3>${field(s.name)}</h3>
       <p class="panel__sub">${field(s.mineralClass)}</p>
-      <p class="panel__region">📍 ${field(s.locality)}</p>
+      <p class="panel__region">${field(s.locality)}</p>
     </div>
     <p class="panel__story">${field(s.summary)}</p>
-    ${renderPanel3dAction(s)}
+    ${renderPanel3dAction(s, panelId === "meteorite-panel" ? "meteorite-grid" : "collection-grid")}
     ${renderPhotoGallery(s)}
     <h4 class="panel__rocks-title">${t("panelAppearance")}</h4>
     <p class="panel__detail">${field(s.appearance)}</p>
-    <h4 class="panel__rocks-title">${t("panelFormation")}</h4>
+    <h4 class="panel__rocks-title">${t(isMeteorite ? "panelCosmicOrigin" : "panelFormation")}</h4>
     <p class="panel__detail">${field(s.formation)}</p>
-    <h4 class="panel__rocks-title">${t("panelGeology")}</h4>
+    <h4 class="panel__rocks-title">${t(isMeteorite ? "panelDiscovery" : "panelGeology")}</h4>
     <p class="panel__detail">${field(s.geology)}</p>`;
   panel.querySelector(".panel__3d-btn")?.addEventListener("click", (e) => {
     const id = e.currentTarget.dataset.id;
+    const gridId = e.currentTarget.dataset.grid;
     document.getElementById("collection").scrollIntoView({ behavior: "smooth" });
     window.Collection3d?.open(id);
   });
   panel.scrollTop = 0;
 }
 
+function renderMeteoritePreview(s) {
+  return `
+    <div class="collection-card__media collection-card__media--preview">
+      ${renderCover(s, "collection-card__photo")}
+    </div>`;
+}
+
+function renderMeteoriteDetail() {
+  const root = document.getElementById("meteorite-detail");
+  if (!root) return;
+
+  if (window.Collection3d) window.Collection3d.disposeAll();
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const s = meteoriteSpecimens.find((item) => item.id === id);
+  const name = document.getElementById("meteorite-detail-name");
+  const mineralClass = document.getElementById("meteorite-detail-class");
+
+  if (!s) {
+    if (name) name.textContent = t("meteoriteNotFound");
+    if (mineralClass) mineralClass.textContent = t("meteoriteNotFoundText");
+    root.innerHTML = `
+      <div class="meteorite-detail__empty">
+        <p>${t("meteoriteNotFoundText")}</p>
+        <a href="meteorites.html">${t("meteoriteBack")}</a>
+      </div>`;
+    document.title = `${t("meteoriteNotFound")} — Peaks & Pebbles`;
+    return;
+  }
+
+  if (name) name.textContent = field(s.name);
+  if (mineralClass) mineralClass.textContent = `${field(s.mineralClass)} · ${field(s.locality)}`;
+  document.title = `${field(s.name)} — Peaks & Pebbles`;
+  root.style.setProperty("--accent", s.accent);
+  root.innerHTML = `
+    <div class="meteorite-detail__layout">
+      <div id="meteorite-detail-media" class="meteorite-detail__media">
+        <div class="collection-card meteorite-detail__media-card" data-id="${s.id}" data-has-model="${s.model3d ? "true" : "false"}" style="--accent:${s.accent}">
+          ${renderCollectionMedia(s)}
+        </div>
+      </div>
+      <article class="meteorite-record">
+        <header class="meteorite-record__header">
+          <span class="meteorite-record__badge">${field(s.locality)}</span>
+          <p class="meteorite-record__class">${field(s.mineralClass)}</p>
+          <p class="meteorite-record__summary">${field(s.summary)}</p>
+        </header>
+        <div class="meteorite-record__notes">
+          <section class="meteorite-record__note">
+            <p class="meteorite-record__number">01</p>
+            <h2>${t("panelAppearance")}</h2>
+            <p>${field(s.appearance)}</p>
+          </section>
+          <section class="meteorite-record__note">
+            <p class="meteorite-record__number">02</p>
+            <h2>${t("panelCosmicOrigin")}</h2>
+            <p>${field(s.formation)}</p>
+          </section>
+          <section class="meteorite-record__note">
+            <p class="meteorite-record__number">03</p>
+            <h2>${t("panelDiscovery")}</h2>
+            <p>${field(s.geology)}</p>
+          </section>
+        </div>
+      </article>
+    </div>`;
+
+  window.Collection3d?.setup(document.getElementById("meteorite-detail-media"));
+}
+
 function buildQuicklist(onSelect) {
   const list = document.getElementById("peak-quicklist");
-  list.innerHTML = SPECIMENS.map(
+  if (!list) return;
+  list.innerHTML = earthSpecimens.map(
     (s) =>
       `<li><button type="button" data-id="${s.id}">${field(s.name)} · ${field(s.locality)}</button></li>`
   ).join("");
   list.querySelectorAll("button").forEach((btn) => {
     btn.addEventListener("click", () => {
-      onSelect(SPECIMENS.find((x) => x.id === btn.dataset.id));
+      onSelect(earthSpecimens.find((x) => x.id === btn.dataset.id));
     });
   });
 }
 
-function buildCollection() {
+function rebuildEarthCollection() {
   if (window.Collection3d) window.Collection3d.disposeAll();
-  const grid = document.getElementById("collection-grid");
-  grid.innerHTML = SPECIMENS.map(
-    (s) => `
+  buildCollection("collection-grid", earthSpecimens, { mapTarget: true });
+}
+
+function rebuildMeteoriteCollection() {
+  if (window.Collection3d) window.Collection3d.disposeAll();
+  buildCollection("meteorite-grid", meteoriteSpecimens, { meteoriteTarget: true });
+}
+
+function buildCollection(gridId, specimens, options = {}) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+
+  if (gridId === "meteorite-grid") {
+    const section = document.querySelector(".meteorite-section");
+    if (specimens.length === 0) {
+      section?.classList.add("is-empty");
+      grid.innerHTML = "";
+      return;
+    }
+    section?.classList.remove("is-empty");
+  }
+
+  const viewLabel = options.meteoriteTarget
+    ? t("meteoriteViewDetails")
+    : currentLang === "zh"
+      ? "查看详情"
+      : "View on map";
+
+  grid.innerHTML = specimens.map((s) => {
+    const action = options.meteoriteTarget
+      ? `<a class="collection-card__btn" href="meteorite.html?id=${encodeURIComponent(s.id)}">${viewLabel}</a>`
+      : `<button type="button" class="collection-card__btn" data-id="${s.id}">${viewLabel}</button>`;
+    return `
       <div class="collection-card" data-id="${s.id}" data-has-model="${s.model3d ? "true" : "false"}" style="--accent:${s.accent}">
-        ${renderCollectionMedia(s)}
+        ${options.meteoriteTarget ? renderMeteoritePreview(s) : renderCollectionMedia(s)}
         <h3>${field(s.name)}</h3>
         <p class="collection-card__sub">${field(s.mineralClass)} · ${field(s.locality)}</p>
         <p class="collection-card__summary">${field(s.summary)}</p>
-        <button type="button" class="collection-card__btn" data-id="${s.id}">${currentLang === "zh" ? "查看详情" : "View on map"}</button>
-      </div>`
-  ).join("");
-  grid.querySelectorAll(".collection-card__btn").forEach((btn) => {
+        ${action}
+      </div>`;
+  }).join("");
+
+  grid.querySelectorAll("button.collection-card__btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const s = SPECIMENS.find((x) => x.id === btn.dataset.id);
-      selectSpecimen(s);
-      document.getElementById("map").scrollIntoView({ behavior: "smooth" });
+      const s = specimens.find((x) => x.id === btn.dataset.id);
+      if (options.mapTarget) {
+        selectSpecimen(s);
+        document.getElementById("map").scrollIntoView({ behavior: "smooth" });
+      }
     });
   });
-  window.Collection3d?.setup(grid);
+  if (!options.meteoriteTarget) window.Collection3d?.setup(grid);
 }
 
 function makeMarkerIcon(s) {
@@ -172,7 +304,9 @@ function makeMarkerIcon(s) {
 }
 
 function selectSpecimen(s) {
-  renderPanel(s);
+  renderPanel(s, "detail-panel", (id) => {
+    activeSpecimenId = id;
+  });
   mapInstance.flyTo(s.coords, 9, { duration: 0.8 });
   Object.values(markers).forEach((mk) =>
     mk._icon && mk._icon.classList.remove("peak-marker--active")
@@ -195,7 +329,7 @@ function initMap() {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(mapInstance);
 
-  SPECIMENS.forEach((s) => {
+  earthSpecimens.forEach((s) => {
     const marker = L.marker(s.coords, {
       icon: makeMarkerIcon(s),
       title: field(s.name),
@@ -209,9 +343,10 @@ function initMap() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("lang-toggle").addEventListener("click", () => {
+  document.getElementById("lang-toggle")?.addEventListener("click", () => {
     setLang(currentLang === "zh" ? "en" : "zh");
   });
   setLang(currentLang);
-  initMap();
+
+  if (PAGE === "earth") initMap();
 });

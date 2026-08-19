@@ -130,5 +130,29 @@
     "photos": [
       "images/specimens/azurite-fluorite/01.jpg"
     ]
+  },
+  "aletai": {
+    "cover": "images/specimens/aletai/01.jpg",
+    "photos": [
+      "images/specimens/aletai/01.jpg"
+    ]
+  },
+  "gebel-kamil": {
+    "cover": "images/specimens/gebel-kamil/01.jpg",
+    "photos": [
+      "images/specimens/gebel-kamil/01.jpg"
+    ]
+  },
+  "muonionalusta": {
+    "cover": "images/specimens/muonionalusta/01.jpg",
+    "photos": [
+      "images/specimens/muonionalusta/01.jpg"
+    ]
+  },
+  "uruacu": {
+    "cover": "images/specimens/uruacu/01.jpg",
+    "photos": [
+      "images/specimens/uruacu/01.jpg"
+    ]
   }
 }

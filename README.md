@@ -27,10 +27,13 @@ internet connection is needed for the map tiles to render).
 
 ## Run locally (development)
 
-No build step is required. Serve the folder with any static file server, e.g.:
+Use the included server because the interactive USDZ viewer requires COOP/COEP
+security headers. Generic static servers such as VS Code Live Server or
+`python -m http.server` can display the pages, but the 3D scans will not load.
 
-```bash
-python3 -m http.server 8000
+```powershell
+npm.cmd start
 ```
 
-Then open <http://localhost:8000>.
+Then open <http://localhost:8080>. After changing `serve.js`, stop the running
+server with `Ctrl+C` and start it again so the new headers take effect.

@@ -39,6 +39,10 @@ const STANDALONE_PHOTO_MAP = {
   蓝磷灰: "lazulite",
   蓝铜矿荧石共生: "azurite-fluorite",
   蓝铜矿萤石共生: "azurite-fluorite",
+  Aletai: "aletai",
+  "Gebel Kamil": "gebel-kamil",
+  Muonionalusta: "muonionalusta",
+  Uruaçu: "uruacu",
 };
 
 const IMAGE_EXT = new Set([".jpeg", ".jpg", ".png", ".gif", ".webp", ".emf", ".wmf"]);
